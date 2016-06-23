@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Data Visualization in Munich - 1st Meetup</title>
+
+		<meta name="description" content="Data Visualization in Munich - 1st Meetup">
+		<meta name="author" content="Mihael Ankerst">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/style.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/monokai-sublime.css">
+		<!-- <link rel="stylesheet" href="lib/css/foundation.css"> -->
+		
+		<!-- Mihael Ankerst's style -->
+		<link rel="stylesheet" href="css/myStyle.css">
+
+		<!-- Google fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Bad+Script' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				
+				<section>
+					<br>
+					<br>
+					<h3>Data Visualization in Munich</h1>
+					<br>
+					<h7>Jump starting d3.js -</h7><br>
+					<h7>all you need to know to get up to speed</h7>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<p>
+						<small>Dr. Mihael Ankerst</small>
+						<br><img height=30 data-src="img/allianz_logo2.png" alt="Allianz">
+					</p>
+				</section>
+				
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_wondering.jpg" alt="Down arrow">
+						</div>
+						<div class="RightDiv">
+							<h3>Contents</h3>
+							<ul>
+								<li><span style="font-weight: bold;">Why another meetup?</span></li>
+								<li><span style="color: #f8f8f2;">D3.js intro</span></li>
+								<li><span style="color: #f8f8f2;">How d3.js works</span></li>
+								<li><span style="color: #f8f8f2">API and examples</span></li>
+								<li><span style="color: #f8f8f2">From zero to hero</span></li>
+							</ul>
+						</div>	
+					</div>	
+				</section>
+				
+				<section>
+					<p><b>Database Exploration with VisDB</b></p>
+					<img data-src="img/VisDB.png" width=700 alt="VisDB">
+				</section>	
+
+				<section>
+					<p><b>Pixel-oriented visualization technique I</b></p>
+					<br>
+					<img data-src="img/Bars_visualization.png" width=700 alt="Bars">
+				</section>		
+				
+				<section>
+					<p><b>Pixel-oriented visualization technique II</b></p>
+					<br><br>
+					<img data-src="img/Recursive_Patterns.png" width=700 alt="Recursive Patterns">
+					<br><br><br><br><br>
+				</section>	
+
+				<section>
+					<p><b>Pixel-oriented visualization technique III</b></p>
+					<img data-src="img/Circle_Segments.png" width=650 alt="Circle Segments">
+				</section>	
+				
+				<section>
+					<p><b>Integrating visualization with classification</b></p>
+					<img data-src="img/PBC.jpg" width=700 alt="PBC">
+					<br><br><br>
+				</section>	
+
+				<section>
+					<p><b>Integrating visualization with temporal pattern mining</b></p>					
+					<br>
+					<img data-src="img/Event_Explorer1.png" width=700 alt="Event Explorer1">
+					<br>
+					<img data-src="img/Event_Explorer2.png" width=700 alt="Event Explorer2">
+					<br><br><br>
+				</section>	
+
+				<section>
+					<p><b>Integrating visualization with association rule mining</b></p>
+					<img data-src="img/item_explorer.png" width=700 alt="item explorer">
+					<p><a href="http://www.ankerst.de/Mihael/proj/mbc">http://www.ankerst.de/Mihael/proj/mbc</a></p>
+				</section>	
+
+				<section>
+					<p><b>Why do we need a new meetup group?</b></p>
+					<br>
+					<ul>
+						<li>many groups related to big data or data analysis</li>
+						<li>none of them focuses on visualization</li>
+					</ul>
+					<br><br><br><br>
+					<p style="text-decoration:underline;">Thank you</p>
+					<ul>
+						<li><img class="down" height=30 data-src="img/allianz_logo2.png" alt="Allianz"> for providing food and drinks</li>
+						<li><img class="down" height=30 data-src="img/Wayra_logo.jpg" alt="Wayra"> for providing the location</li>
+						and
+						<li><b>YOU</b> - for making this meetup happen!</li>
+					</ul>
+					<br>
+					<br>
+				</section>
+				
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_needsGuidance.jpg" alt="Down arrow">
+						</div>
+						<div class="RightDiv">
+							<h3>Contents</h3>
+							<ul>
+								<li><span style="color: #f8f8f2;">Why another meetup?</span></li>
+								<li><span style="font-weight: bold;">D3.js intro</span></li>
+								<li><span style="color: #f8f8f2;">How d3.js works</span></li>
+								<li><span style="color: #f8f8f2">API and examples</span></li>
+								<li><span style="color: #f8f8f2">From zero to hero</span></li>
+							</ul>
+						</div>	
+					</div>	
+				</section>
+				
+				<section>
+					<h2>D3.js intro</h2>
+					<ul>
+						<li>d3 = data-driven documents</li>
+						<li>Javascript library for visualizing data in web browsers</li>
+						<li>Builds upon web standards (e.g. HTML, SVG, CSS)</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Why d3.js?</h2>
+					<ul>
+						<li>popularity & community</li>
+						<li>functionality</li>
+						<li>open source</li>
+						<li>availability of examples and tutorials</li>
+						<li>distribution of results</li>
+					</ul>
+				</section>	
+				
+				<section>
+					<h2>My personal experience</h2>
+					<ul>
+						<li>Amazing functionality</li>
+						<li>Learning time spent on <br>visualization design and web standards</li>
+						<li>D3 version 3.x vs version 4.0</li>
+					</ul>
+				</section>
+				
+				<section>
+					<img data-src="img/c_question.jpg" alt="question">
+				</section>
+				
+				<section>
+					<h2>Web Technologies</h2>
+					<img data-src="img/web.png" alt="web">
+					<ul class="fragment technologies">
+						<li>HTML - (contents)</li>
+						<li>CSS - (appearance)</li>
+						<li>SVG - (graphics)</li>
+						<br>
+						<li>DOM - (interface for representing all of the above)</li>
+						<br>
+						<li>Javascript - (updating all of the above)</li>
+					</ul>
+				</section>
+				
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_confused.jpg" alt="Down arrow">
+						</div>
+						<div class="RightDiv">
+							<h3>Contents</h3>
+							<ul>
+								<li><span style="color: #f8f8f2;">Why another meetup?</span></li>
+								<li><span style="color: #f8f8f2">Intro</span></li>
+								<li><span style="font-weight: bold;">How d3.js works</span></li>
+								<li><span style="color: #f8f8f2">API and examples</span></li>
+								<li><span style="color: #f8f8f2">From zero to hero</span></li>
+							</ul>
+						</div>	
+					</div>	
+				</section>
+
+				<section>
+					<h2>Selections</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Element(s)</th>
+								<th>Selection</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>&lt;h1&gt;</td>
+								<td>d3.select("h1")</td>
+							</tr>
+							<tr>
+								<td>&lt;rect&gt;<br>&lt;rect&gt;<br>&lt;rect&gt;</td>
+								<td>d3.selectAll("rect")</td>
+							</tr>
+							<tr>
+								<td>&lt;circle&gt;
+									<br>&lt;circle&gt;
+									<br>&lt;circle&gt;
+									<br>&lt;circle&gt;
+									<br>&lt;circle&gt;
+								</td>
+								<td>d3.selectAll("circle")</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h2>The data join</h2>
+					<p style="font-size:0.7em;text-decoration:underline;">Visualization means mapping data elements onto visual elements</span>
+					</p>
+					<p class="fragment d3dj" style="font-size:0.7em;"><span style="background:lightgrey">var selection = d3.selectAll("rect").data(["my","first","data","join"]);</span></p>
+					<p class="fragment d3djExample" style="font-size:0.7em;">let's assume there are two rectangles ...</p>
+					
+					<table class="fragment d3djTable">
+						<thead>
+							<tr>
+								<th>Index</th>
+								<th>data element</th>
+								<th>visual element</th>
+								<th>resulting selection</th>
+								<th>the d3 way</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>"my"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>"first"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>"data"</td>
+								<td></td>
+								<td>enter</td>
+								<td>selection.enter()</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>"join"</td>
+								<td></td>
+								<td>enter</td>
+								<td>selection.enter()</td>
+							</tr>							
+						</tbody>
+					</table>
+				</section>				
+
+				<section>
+					<h2>The data join</h2>
+					<p style="font-size:0.7em;text-decoration:underline;">Visualization means mapping data elements onto visual elements</span>
+					</p>
+					<p style="font-size:0.7em;"><span style="background:lightgrey">var selection = d3.selectAll("rect").data(["my","first","data","join"]);</span></p>
+					<p style="font-size:0.7em;">let's assume there are <b>five</b> rectangles ...</p>
+					
+					<table class="fragment d3djTable2">
+						<thead>
+							<tr>
+								<th>Index</th>
+								<th>data element</th>
+								<th>visual element</th>
+								<th>resulting selection</th>
+								<th>the d3 way</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>"my"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>"first"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>"data"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>"join"</td>
+								<td>&lt;rect&gt;</td>
+								<td>update</td>
+								<td>selection</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>&lt;rect&gt;</td>
+								<td>exit</td>
+								<td>selection.exit()</td>
+							</tr>							
+						</tbody>
+					</table>
+				</section>				
+				
+				<!-- slide with code examples -->
+				<section data-external="mySlides/slide_11/example1.html"></section>
+				<section data-external="mySlides/slide_12/example2.html"></section>
+				<section data-external="mySlides/slide_12/example2_output.html"></section>
+				<section data-external="mySlides/slide_13/example3.html"></section>
+				<section data-external="mySlides/slide_13/example3_output.html"></section>
+				<section data-external="mySlides/slide_14/example4.html"></section>
+				<section data-external="mySlides/slide_14/example4_output.html"></section>
+				<section data-external="mySlides/slide_15/example5.html"></section>
+				<section data-external="mySlides/slide_15/example5_output.html"></section>
+				<section data-external="mySlides/slide_16/example6.html"></section>
+				<section data-external="mySlides/slide_16/example6_output.html"></section>
+				<section data-external="mySlides/slide_17/example7.html"></section>
+				<section data-external="mySlides/slide_17/example7_output.html"></section>
+
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_confident.jpg" alt="Down arrow">
+						</div>
+						<div class="RightDiv">
+							<h3>Contents</h3>
+							<ul>
+								<li><span style="color: #f8f8f2;">Why another meetup?</span></li>
+								<li><span style="color: #f8f8f2;">Intro</span></li>
+								<li><span style="color: #f8f8f2;">How d3.js works</span></li>
+								<li><span style="font-weight: bold;">API and examples</span></li>
+								<li><span style="color: #f8f8f2">From zero to hero</span></li>
+							</ul>
+						</div>	
+					</div>	
+				</section>
+				
+				<section>
+					<h2>The D3 3.x API</h2>
+					<ul style="font-size:0.8em;">
+						<li><b>Core</b> - selections, transitions, data, localization, colors, etc.</li>
+						<li><b>Scales</b> - convert between data and visual encodings</li>
+						<li><b>SVG</b> - utilities for creating Scalable Vector Graphics</li>
+						<li><b>Time</b> - parse or format times, compute calendar intervals, etc.</li>
+						<li><b>Layouts</b> - derive secondary data for positioning elements</li>
+						<li><b>Geography</b> - project spherical coordinates, latitude & longitude math</li>
+						<li><b>Geometry</b> - utilities for 2D geometry</li>
+						<li><b>Behaviors</b> - reusable interaction behaviors</li>
+					</ul>
+				</section>
+			
+				<section>
+					<h2>Demos</h2>
+					<ul>
+						<li><a href="http://mbostock.github.io/d3/talk/20110921/#0">force layout</a></li>
+						<li><a href="http://bl.ocks.org/EE2dev/raw/6f75c878ed70887a3045eb1ac2b6b7f1/">math quiz</a></li>
+						<li><a href="https://bl.ocks.org/mbostock/1345853">transform transitions</a></li>
+						<li><a href="http://bl.ocks.org/kerryrodden/raw/7090426/">sequences sunburn</a></li>
+						<li><a href="http://letsfreecongress.org/">money wins elections</a></li>
+						<li><a href="http://bl.ocks.org/mbostock/raw/1256572/">D3 show reel</a></li>
+						<li><a href="http://setosa.io/ev/ordinary-least-squares-regression/">ordinary least squares regression explained</a></li>
+					</ul>
+					<p>... and many more examples can be found <a href="https://github.com/d3/d3/wiki/Gallery">here</a></p>
+				</section>			
+				
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_success.jpg" alt="Down arrow">
+						</div>
+						<div class="RightDiv">
+							<h3>Contents</h3>
+							<ul>
+								<li><span style="color: #f8f8f2;">Why another meetup?</span></li>
+								<li><span style="color: #f8f8f2;">Intro</span></li>
+								<li><span style="color: #f8f8f2;">How d3.js works</span></li>
+								<li><span style="color: #f8f8f2">API and examples</span></li>
+								<li><span style="font-weight: bold;">From zero to hero</span></li>
+							</ul>
+						</div>	
+					</div>	
+				</section>
+
+				<section>
+					<section>
+						<h2>From zero to hero</h2>
+						<br>
+						<p>First steps...</p>
+						<ul>
+							<li>Text editor (Windows): <a href="https://notepad-plus-plus.org/">notepad++</a></li>
+							<li>Browser: <a href="https://www.google.com/chrome/">google chrome</a></li>
+							<li>Tutorial: <a href="https://www.dashingd3js.com/table-of-contents">dashingd3js</a></li>
+							<li>Online course: <a href="https://www.udacity.com/course/data-visualization-and-d3js--ud507">Udacity d3.js</a></li>
+						</ul>
+					</section>
+					
+					<section class="rest">
+						<h3>Text editor (Windows)</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/notepad_pp.png" alt="notepad++">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://notepad-plus-plus.org/">notepad++</a>
+							</div>
+						</div>	
+						<br><br><br><br><br>
+					</section>	
+
+					<section class="rest">
+						<h3>Browser</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/Google_chrome.png" alt="chrome">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://www.google.com/chrome/">google chrome</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>	
+					
+					<section class="rest">
+						<h3>Tutorial</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/DashingD3js.png" alt="dashingd3js">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://www.dashingd3js.com/table-of-contents">dashingd3js</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>
+
+					<section class="rest">
+						<h3>Online course</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/udacity.png" alt="udacity">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://www.udacity.com/course/data-visualization-and-d3js--ud507">Udacity d3.js</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>						
+				</section>	
+
+				<section>
+					<section>
+						<h2>From zero to hero</h2>
+						<br>
+						<p>Getting excited...</p>
+						<ul>
+							<li>D3 book: <a href="https://www.amazon.com/Data-Visualization-d3-js-Swizec-Teller/dp/1782160000">data visualization with d3.js</a></li>
+							<li>Javascript book: <a href="http://shop.oreilly.com/product/0636920029564.do">speaking javascript</a></li>
+							<li>Web server: python -m SimpleHTTPServer (Python 2.7)</li>
+							<li>Q&A: <a href="http://www.stackoverflow.com">stackoverflow</a></li>
+							<li>Publishing code snippets for Q&A: <a href="https://jsfiddle.net">jsfiddle</a></li>	
+						</ul>
+					</section>
+					
+					<section class="rest">
+						<h3>D3 book</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/data_vis_with_d3js_swizec.png" width=350 alt="Data Visualization">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://www.amazon.com/Data-Visualization-d3-js-Swizec-Teller/dp/1782160000">Data Visualization with d3.js</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Javascript book</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/speaking_js.png" width=350 alt="udacity">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="http://shop.oreilly.com/product/0636920029564.do">Speaking JavaScript</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Web server</h3>
+						<br><br><br><br>
+							python -m SimpleHTTPServer (python 2.7)
+						<br><br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Q & A</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/stackoverflow.png" alt="stackoverflow">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="http://www.stackoverflow.com">stackoverflow</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Publishing code snippets for Q&A</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/JSFiddle.png" alt="jsfiddle">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://jsfiddle.net">jsfiddle</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>							
+				</section>
+
+				<section>
+					<section>
+						<h2>From zero to hero</h2>
+						<br>
+						<p>Getting involved...</p>
+						<ul>
+							<li>Publishing examples <a href="http://bl.ocks.org/-/about">blocks</a></li>
+							<li>Design patterns - reusable code: <a href="https://bost.ocks.org/mike/chart/">reusable code</a></li>
+							<li>Advanced D3 book: <a href="https://www.amazon.com/Mastering-D3-js-Visualization-JavaScript-Developers/dp/178328627X">mastering d3.js</a></li>
+							<li>Twitter Hashtag: <a href="https://twitter.com/search?q=%23d3js&src=typd">#d3js</a></li>
+						</ul>
+					</section>
+					
+					<section class="rest">
+						<h3>Publishing examples</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/bl_ocks_org.png" alt="bl.ocks.org">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="http://bl.ocks.org/-/about">blocks</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Design patterns</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/reusable.png" alt="reusable">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://bost.ocks.org/mike/chart/">reusable code</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>	
+
+					<section class="rest">
+						<h3>Advanced D3 book</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/mastering_ds.png" alt="Mastering D3.js">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://www.amazon.com/Mastering-D3-js-Visualization-JavaScript-Developers/dp/178328627X">Mastering D3.js</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>		
+
+					<section class="rest">
+						<h3>Twitter Hashtag</h3>
+						<br><br>
+						<div class=wrapperDiv">
+							<div class="LeftDiv">
+								<img data-src="img/d3-resources/twitter.png" alt="twitter">
+							</div>
+							
+							<div class="RightDiv" style="padding-top:100px;">
+								<a href="https://twitter.com/search?q=%23d3js&src=typd">#d3js</a>
+							</div>
+						</div>
+						<br><br><br><br><br>						
+					</section>											
+				</section>
+				
+				<section class="rest">
+					<div class=wrapperDiv">
+						<div class="LeftDiv">
+							<img data-src="img/c_thankYou.jpg" alt="Thank you">
+						</div>
+						
+						<div class="RightDiv" style="padding-top:100px;">
+							<h3 class="end">Thank you!</h3>
+						</div>
+					</div>	
+				</section>		
+			</div>
+
+		</div>
+
+		<!-- REVEAL -->
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<!-- JQUERY -->
+		<script src="js/jquery-1.12.0.min.js"></script>
+		<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
+
+		<!-- UNDERSCORE -->
+		<script src="js/underscore.js"></script>
+
+		<!-- D3 -->
+		<script src="js/d3.min.js"></script>
+		<!-- <script src="js/d3.hexbin.v0.min.js"></script> -->
+		<!-- <script src="http://d3js.org/topojson.v0.min.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.hexbin.v0.min.js"></script> -->
+
+		<!-- REVEAL TO D3 -->
+		 <script src="js/reveal-to-d3-config.js"></script>
+		 <script src="js/reveal-to-d3.js"></script>
+
+		<!-- MIHAEL'S D3 SCRIPTS -->
+
+		<!-- Some helper functions that are used by several D3 scripts -->
+		
+		<script src="js/helperFunctions.js"></script>
+		<script src="mySlides/slide_13/example3_output.js"></script>
+		<script src="mySlides/slide_14/example4_output.js"></script>
+		<script src="mySlides/slide_15/example5_output.js"></script>
+		<script src="mySlides/slide_16/example6_output.js"></script>
+		<script src="mySlides/slide_17/example7_output.js"></script>
+
+		<!-- REVEAL INIT -->
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: false,
+				history: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will be preserved
+			    // when the presentation is scaled to fit different resolutions. Can be
+			    // specified using percentage units.
+			    width: 1024, //1920, //'100%',
+			    height: 768, //1080, //'100%',
+			    // Factor of the display size that should remain empty around the content
+    			margin: 0,
+				// Bounds for smallest/largest possible scale to apply to content
+    			minScale: 0.2,
+    			maxScale: 4,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/highlight/highlight.js', async: false, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			//Remove the very heavy title slide (& slightly heavy end slide)
+			//by slides before and after that have no JS scripts running by themselves
+			Reveal.addEventListener( 'removeSVGs', function() {
+		    	d3.select('#title-slide #titleSlide svg').remove();
+		    	d3.select('#end-slide #endSlide svg').remove();
+			} );
+
+		</script>
+
+	</body>
+</html>
