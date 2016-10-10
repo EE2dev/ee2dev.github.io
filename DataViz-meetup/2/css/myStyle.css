@@ -1,0 +1,37 @@
+<style>	
+/*
+	section.rest div.wrapperDiv {
+		position: relative;
+	}
+	
+	section.rest div.LeftDiv {
+		position: absolute;
+		left: 0px;
+		width: 50%;
+	    padding-top: 10px;
+		padding-right: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		//border: 1px solid red;
+
+	}
+	section.rest div.RightDiv {
+		margin-left: 52%;
+		padding-top: 10px;
+		padding-right: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		//border: 1px solid blue;
+	}
+	#rest h3.end{
+		font-family: 'Comic Sans MS', cursive, sans-serif;
+	}
+	
+	img.down {
+		margin: 0px 0px 0px 0px !important;
+	}*/
+	
+	body {
+  background: black;
+  background-color: black; }
+</style>
