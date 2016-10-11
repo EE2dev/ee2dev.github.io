@@ -1,0 +1,1 @@
+"\AZ_DATEN\Programme\WinPython27\python-2.7.10.amd64"\python -m SimpleHTTPServer

@@ -29,14 +29,17 @@ pt.slideIdToFunctions = {
       pt.cardSolution.init();
     }
   },
-  'example5_output': {
+  'members': {
     'init': function() {
-      pt.example5_output.init();
+      pt.members.init();
     }
   },
-  'example6_output': {
+  'rsvp': {
     'init': function() {
-      pt.example6_output.init();
+      pt.rsvp.init();
+    },
+	'0': function() {
+      pt.rsvp.update();
     }
   },  
   'example7_output': {
@@ -82,6 +85,8 @@ function removeSVGs() {
 	d3.select("div#kraken svg").remove();
 	d3.select("#calSolution svg").remove();
 	d3.select("#cardSolution svg").remove();
+	d3.select("div.members svg").remove();
+	d3.select("div.RSVPGraph svg").remove();
   
   d3.select('#intro-gradient #introGradient svg').remove();
   d3.select('#traffic-accidents #trafficAccidents svg').remove();
