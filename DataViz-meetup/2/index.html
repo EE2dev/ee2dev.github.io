@@ -2,6 +2,10 @@
 <html lang="en">
 
 <!-----------------------------------------------------------
+approach from ptamarit
+https://github.com/hakimel/reveal.js/issues/456
+https://github.com/ptamarit/slides-data-viz-web-d3
+
 using d3.js in reveal:
 1) include the correct d3.js lib (see <-- D3 --)
 2) include your .js in (see <-- MIHAEL'S D3 SCRIPTS --
@@ -12,10 +16,21 @@ using d3.js in reveal:
 6) in external .js file, wrap d3 code into: 
 	pt.title = pt.title || {};
 	pt.title.init = function() { // d3 code }
-	
-	--------------------------------------
-	REMARKS:
+7) for transitions do
+a) add <span class="fragment"></span> in section html
+b) in reveal-to-d3-config, set map '0' (or '1',..) to index of fragment
+   'rsvp': {
+    'init': function() {
+      pt.rsvp.init();
+    },
+	'0': function() {
+      pt.rsvp.update();
+    }
+  }
+
+Note:	
 	- d3.js in first slide does not work
+	- reveal with d3 to pdf: http://jack-kelly.com/convert_revealjs_d3_to_pdf
 ------------------------------------------------------------>
 	<head>
 		<meta charset="utf-8">
@@ -230,10 +245,10 @@ using d3.js in reveal:
 				
 				<section id="links">
 					<h3>links</h3>
-					<p>cocktail mix</p>
-					<p>bug</p>
-					<p>squid</p>
-					<p>brain teaser</p>
+					<p><a href="http://bl.ocks.org/monfera/raw/2d2809d8458ffb81cc9acab2e65ed4ef/">cocktail mix</a></p>
+					<p><a href="http://bl.ocks.org/monfera/raw/64ae67f49015960b99983d9fecf6db59/">bug</a></p>
+					<p><a href="https://billautomata.github.io/squid_arms/">squid</a></p>
+					<p><a href="http://bl.ocks.org/EE2dev/raw/26a29797725abc3bc4411e879b20f4bb/">brain teaser</a></p>
 				</section>				
 	
 			</div>
@@ -287,8 +302,8 @@ using d3.js in reveal:
 				// The "normal" size of the presentation, aspect ratio will be preserved
 			    // when the presentation is scaled to fit different resolutions. Can be
 			    // specified using percentage units.
-			    width:  960, //'100%', // 1024, //1920, //'100%',
-			    height:  700, //'100%', // 768, //1080, //'100%',
+			    width:  '100%', // 1024, //1920, //'100%',
+			    height:  '100%', // 768, //1080, //'100%',
 			    // Factor of the display size that should remain empty around the content
     			margin: 0,
 				// Bounds for smallest/largest possible scale to apply to content
