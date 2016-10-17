@@ -4,6 +4,7 @@ attendence
 
 no shows
 (2/2)
+
 1. Babis Grouzakis
 2. Ed
 3. Florian LorÃ©tan
