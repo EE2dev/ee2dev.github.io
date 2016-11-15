@@ -16,3 +16,9 @@ no shows
 9. Olavi
 10. Stuart Barlow
 11. yoyo
+
+potential future presenters
+
+apr/may
+Timo Philip Burmeister (email): visualizing web structure with graph viz
+Frode Voll Aasen	(email): datavault builder
