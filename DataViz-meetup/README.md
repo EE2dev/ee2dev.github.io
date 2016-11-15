@@ -1,8 +1,8 @@
-attendence
+###attendence
 - 66 (140 RSVP'ed)
 - 81 (152 RSVP'ed)
 
-no shows
+###no shows
 (2/2)
 
 1. Babis Grouzakis
@@ -17,8 +17,8 @@ no shows
 10. Stuart Barlow
 11. yoyo
 
-potential future presenters
+###potential future presenters
 
 apr/may
-Timo Philip Burmeister (email): visualizing web structure with graph viz
-Frode Voll Aasen	(email): datavault builder
+- Timo Philip Burmeister (email): visualizing web structure with graph viz
+- Frode Voll Aasen	(email): datavault builder
