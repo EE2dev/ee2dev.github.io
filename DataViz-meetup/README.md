@@ -19,6 +19,6 @@
 
 ###potential future presenters
 
-apr/may
+may 3rd
 - Timo Philip Burmeister (email): visualizing web structure with graph viz
 - Frode Voll Aasen	(email): datavault builder
