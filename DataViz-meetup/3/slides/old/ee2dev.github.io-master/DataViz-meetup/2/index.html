@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<!-----------------------------------------------------------
+approach from ptamarit
+https://github.com/hakimel/reveal.js/issues/456
+https://github.com/ptamarit/slides-data-viz-web-d3
+
+using d3.js in reveal:
+1) include the correct d3.js lib (see <-- D3 --)
+2) include your .js in (see <-- MIHAEL'S D3 SCRIPTS --
+3) optional: if slides are in separate file, then refer to them with
+	<section data-external="mySlides/slide_01/title.html"></section>
+4) In separate x.html file, set a unique section ID (<section id="intro">)
+5) in reveal-to-d3-config, set map 'init' to <section ID> and also the right init function
+6) in external .js file, wrap d3 code into: 
+	pt.title = pt.title || {};
+	pt.title.init = function() { // d3 code }
+7) for transitions do
+a) add <span class="fragment"></span> in section html
+b) in reveal-to-d3-config, set map '0' (or '1',..) to index of fragment
+   'rsvp': {
+    'init': function() {
+      pt.rsvp.init();
+    },
+	'0': function() {
+      pt.rsvp.update();
+    }
+  }
+
+Note:	
+	- d3.js in first slide does not work
+	- reveal with d3 to pdf: http://jack-kelly.com/convert_revealjs_d3_to_pdf
+------------------------------------------------------------>
+	<head>
+		<meta charset="utf-8">
+
+		<title>Data Visualization in Munich - 1st Meetup</title>
+
+		<meta name="description" content="Data Visualization in Munich - 2nd Meetup">
+		<meta name="author" content="Mihael Ankerst">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<!--
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/style.css" id="theme">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">		
+
+		<!-- Code syntax highlighting 
+		<!-- link rel="stylesheet" href="lib/css/monokai-sublime.css"
+		 <link rel="stylesheet" href="lib/css/foundation.css"> 
+		
+
+		-->
+		
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		
+		<!-- Mihael Ankerst's style --
+		<link rel="stylesheet" href="css/myStyle.css"-->	
+
+
+		<!-- Code syntax highlighting -->
+		<!-- link rel="stylesheet" href="lib/css/zenburn.css"-->		
+
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				
+				<section>
+					click right-arrow to start!
+				</section>	
+				
+				<!--
+				<section data-background-color="black" data-external="mySlides/slide_01/title.html"></section>
+				-->
+				<section data-background-color="black" id="title">
+					<h3>Welcome to the second <br>Data visualization in Munich Meetup!</h3>
+				</section>
+				
+				<section>
+						<h3>Thank you for sponsoring...</h3>
+						<ul>
+							<li>... the great location</li>
+							<li>... the delicious food</li>
+							<li>... the tasty drinks!</li>
+						</ul>
+						<br>
+						<br>
+						<h3 style="text-transform: none">OnPage.org</h3>
+				</section>
+							
+				<section data-background-transition="zoom" data-background-color="white" data-external="mySlides/slide_03/members.html"></section>
+				<section data-background-transition="zoom" data-background-color="white" data-external="mySlides/slide_04/rsvp.html"></section>				
+
+				<section data-background-transition="fade">
+					<h3>Attendance policy - the data viz way</h3>
+						<ul>
+							<li>expose them to a creepy bug</li>
+							<li>throw them in the water</li>
+						</ul>
+				</section>
+
+				<section id="bug" data-background-color="black"></section>
+				
+				<section data-background-color="black" data-external="mySlides/slide_07/squid.html"></section>
+				
+				<section id="brainTeaser">
+					<h3>The brain teaser</h3>
+					<p>You have to guess someone's birthday (just 1 out of 366 days, i.e. not the year) under these conditions:</p>
+					<ul>
+						<li class="fragment highlight-blue">you can just ask 9 yes/no questions</li>
+						<br>
+						<li class="fragment highlight-blue">all questions must be independent, i.e. a question must not depend on the answer of another question</li>
+						<br>
+						<li class="fragment highlight-blue">your questions must be so easy that a 6 year old kid can answer them</li>
+				</section>
+				
+				<section>
+					<h3>Agenda for today</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th>Topic</th>
+								<th>Speaker</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>7.40-8.00</td>
+								<td>A very short intro to ggplot2</td>
+								<td>Daniel Kühn</td>
+							</tr>
+							<tr>
+								<td>8.00-8.20</td>
+								<td>Visualizations: The good, the bad and the ugly</td>
+								<td>Mikołaj Dądela</td>
+							</tr>
+							<tr>
+								<td>8.20-8.50</td>
+								<td>Visualizing the infinite 2D space with an Hyperbolic Viewer</td>
+								<td>Jörg Walter</td>
+							</tr>
+							<tr>
+								<td>8.50-9.00</td>
+								<td>Job market - the hottest data viz job openings in town + closing remarks</td>
+								<td>Mihael Ankerst</td>
+							</tr>
+							<tr>
+								<td>9.00-</td>
+								<td>More drinks/food + networking</td>
+								<td>All</td>
+							</tr>								
+						</tbody>
+					</table>
+				</section>				
+				
+				<section data-background-color="white" data-background-transition="zoom">
+					A very short intro to ggplot2 - Daniel Kühn
+				</section>
+
+				<section data-background-color="green" data-background-transition="zoom">
+					Visualizations: The good, the bad and the ugly - Mikołaj Dądela
+				</section>
+				
+				<section data-background-color="blue" data-background-transition="zoom">
+					Visualizing the infinite 2D space with an Hyperbolic Viewer - Jörg Walter
+				</section>
+				
+				<section data-background-color="white" data-background-transition="zoom">
+					Job market - the hottest data viz job openings in town
+				</section>
+				
+				<section  data-background-color="white" id="brainTeaser2">
+					<h3>The brain teaser</h3>
+					<p>You have to guess someone's birthday (just 1 out of 366 days, i.e. not the year) under these conditions:</p>
+					<ul>
+						<li>you can just ask 9 yes/no questions</li>
+						<br>
+						<li>all questions must be independent, i.e. a question must not depend on the answer of another question</li>
+						<br>
+						<li>your questions must be so easy that a 6 year old kid can answer them</li>
+					</ul>
+				</section>
+
+				<section   data-background-color="white" id="btideas">
+					Any ideas?
+				</section>
+				
+				<section   data-background-color="white" data-external="mySlides/slide_10/calSolution.html">
+				</section>
+				
+
+				<section   data-background-color="white" id="btsolution">
+				what? what? what?
+				</section>
+				
+				<section   data-background-color="white" data-external="mySlides/slide_12/cardSolution.html">
+				</section>	
+				
+				
+				<section   data-background-color="white" id="next">
+					<h3>What happens next?</h3>
+					<p>Next meetup probably at the beginning of 2017</p>
+					<br>
+					<p><b>Please get in touch with me</b></p>
+					<ul>
+						<li>to present your own visualization</li>
+						<br>
+						<li>to show someone's visualization</li>
+						<br>
+						<li>to tell me any suggestions</li>
+					</ul>					
+				</section>
+				
+				<section  data-background-color="steelblue" data-background-transition="zoom" id="thankyou">
+				Thank you!!
+				<br><br>
+				<img src="img/squid.png">
+				<br><br>and now let's have a drink together!
+				</section>
+				
+				<section id="links">
+					<h3>links</h3>
+					<p><a href="http://bl.ocks.org/monfera/raw/2d2809d8458ffb81cc9acab2e65ed4ef/">cocktail mix</a></p>
+					<p><a href="http://bl.ocks.org/monfera/raw/64ae67f49015960b99983d9fecf6db59/">bug</a></p>
+					<p><a href="https://billautomata.github.io/squid_arms/">squid</a></p>
+					<p><a href="http://bl.ocks.org/EE2dev/raw/26a29797725abc3bc4411e879b20f4bb/">brain teaser</a></p>
+				</section>				
+	
+			</div>
+
+		</div>
+
+		<!-- REVEAL -->
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<!-- JQUERY -->
+		<script src="js/jquery-1.12.0.min.js"></script>
+		<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
+
+		<!-- UNDERSCORE -->
+		<script src="js/underscore.js"></script>
+
+		<!-- D3 -->
+		<script src="js/d3.min.js"></script>
+		<!-- <script src="js/d3.hexbin.v0.min.js"></script> -->
+		<!-- <script src="http://d3js.org/topojson.v0.min.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.hexbin.v0.min.js"></script> -->
+
+		<!-- REVEAL TO D3 -->
+		 <script src="js/reveal-to-d3-config.js"></script>
+		 <script src="js/reveal-to-d3.js"></script>
+
+		<!-- MIHAEL'S D3 SCRIPTS -->
+
+		<!-- Some helper functions that are used by several D3 scripts -->
+		
+		<script src="mySlides/slide_01/title.js"></script>
+		<script src="mySlides/slide_03/members.js"></script>
+		<script src="mySlides/slide_04/rsvp.js"></script>
+		<script src="mySlides/slide_06/bug.js"></script>
+		<script src="mySlides/slide_07/kraken.js"></script>
+		<script src="mySlides/slide_10/calSolution.js"></script>
+		<script src="mySlides/slide_12/cardSolution.js"></script>
+		
+		<!-- REVEAL INIT -->
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: false,
+				history: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will be preserved
+			    // when the presentation is scaled to fit different resolutions. Can be
+			    // specified using percentage units.
+			    width:  960, //'100%', // 1024, //1920, //'100%',
+			    height:  700, //'100%', // 768, //1080, //'100%',
+			    // Factor of the display size that should remain empty around the content
+    			margin: 0,
+				// Bounds for smallest/largest possible scale to apply to content
+    			minScale: 0.2,
+    			maxScale: 4,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/highlight/highlight.js', async: false, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			//Remove the very heavy title slide (& slightly heavy end slide)
+			//by slides before and after that have no JS scripts running by themselves
+			Reveal.addEventListener( 'removeSVGs', function() {
+		    	d3.select('#title-slide #titleSlide svg').remove();
+		    	d3.select('#end-slide #endSlide svg').remove();
+			} );
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<style>	
+	#example3 pre {
+		width: 110%;
+	}
+</style>
+
+<section id="example3" data-background="#23241f">
+<pre><code>&lt;!-- Example 3: My Meetup groups with d3.js --&gt;
+&lt;!DOCTYPE html&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt; &lt;!-- also save this file as unicode-8 ! --&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://d3js.org/d3.v3.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt; 
+    &lt;h1&gt;My meetup groups are:&lt;/h1&gt;
+    
+    &lt;script&gt;
+      var meetupGroups 
+	  = [&quot;Big Data&quot;, &quot;Big Data Developers&quot;, &quot;Streaming Big Data&quot;];      
+      display(meetupGroups); 
+	  
+      function display(mydata){
+        var anchor = d3.select(&quot;body&quot;);
+        
+        var selection = anchor.selectAll(&quot;p&quot;)
+          .data(mydata);
+		  
+        // update selection  
+        selection.text(function (d) { return d + &quot; - updated&quot;;}); 
+        
+        selection.enter() // enter selection
+          .append(&quot;p&quot;)
+          .text(function (d) { return d + &quot; - entered&quot;;});
+          
+        selection.exit() // exit selection
+          .remove();
+      }     
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</section>

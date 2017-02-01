@@ -1,0 +1,22 @@
+<!DOCTYPE html>	
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" type="text/css" href="../libs/itemExplorer_10.css">
+  <script src="../libs/d3.js"></script>
+  <script src="../libs/itemExplorer_10.js"></script>
+</head>
+
+<body>
+  <script>  
+    var myIEChart = itemExplorerChart("data/Demo_Grocery.csv");
+    showChart(); 
+    
+    function showChart() {
+      d3.select("body")
+        .append("div")
+        .attr("class", "chart")
+        .call(myIEChart);
+    }   
+  </script>
+</body>
+</html> 

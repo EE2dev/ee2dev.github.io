@@ -1,0 +1,23 @@
+T-sne
+http://distill.pub/2016/misread-tsne/#perplexity=20&epsilon=3&demo=14&demoParams=499,100
+
+How Humans see data - John Rauser
+https://www.youtube.com/watch?v=fSgEeI2Xpdc
+
+The state of d3 voronoi
+https://visionscarto.net/the-state-of-d3-voronoi
+
+You Draw It: What Got Better or
+Worse During Obama’s Presidency
+https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html?_r=1
+
+https://www.shipmap.org/
+
+
+
+
+
+http://flowingdata.com/2016/01/05/causes-of-death/
+
+Intro slide
+http://bl.ocks.org/philipcdavis/b5224a272556fcb2d0c776b7a247ede4

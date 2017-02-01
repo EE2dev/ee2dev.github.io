@@ -1,0 +1,43 @@
+<!DOCTYPE html>	
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" type="text/css" href="../libs/itemExplorer_10.css">
+  <script src="../libs/d3.js"></script>
+  <script src="../libs/itemExplorer_10.js"></script>
+</head>
+
+<body>
+  <pre id="data">
+_customers,item1,item2,item3,item4
+100000,0,0,0,1
+100000,0,0,1,1
+100000,0,1,0,1
+100000,0,1,1,1
+100000,1,0,0,1
+100000,1,0,1,1
+100000,1,1,0,1
+100000,1,1,1,1
+100000,0,0,0,0
+100000,0,0,1,0
+100000,0,1,0,0
+100000,0,1,1,0
+100000,1,0,0,0
+100000,1,0,1,0
+100000,1,1,0,0
+100000,1,1,1,0
+</pre>
+
+  <script>  
+    var myIEChart = itemExplorerChart();
+    showChart(); 
+    
+    function showChart(_file) {
+      d3.select("body")
+        .append("div")
+        .attr("class", "chart")
+		.datum(_file)
+        .call(myIEChart);
+    }   
+  </script>
+</body>
+</html> 

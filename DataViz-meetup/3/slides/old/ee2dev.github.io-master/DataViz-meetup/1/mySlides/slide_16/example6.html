@@ -1,0 +1,57 @@
+<style>
+	#example6 pre {
+		width: 110%;
+		// line-height: 1.2em;
+		// font-size: 0.35em;
+	}
+</style>
+
+<section id="example6" data-background="#23241f">
+<!-- <pre><code style="font-size: 12px; margin-top: 0px;"> 
+<pre><code class="hljs" data-trim contenteditable> -->
+<div>
+<pre><code>&lt;!-- Example 6: My Meetup groups with d3.js and circles --&gt;
+&lt;!DOCTYPE html&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt; &lt;!-- also save this file as unicode-8 ! --&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;http://d3js.org/d3.v3.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;    
+    &lt;h1&gt;My meetup groups are:&lt;/h1&gt;
+    &lt;svg width=&quot;500&quot; height=&quot;500&quot;&gt;&lt;/svg&gt;
+    
+    &lt;script&gt;
+      var meetupGroups 
+	  = [&quot;Big Data&quot;, &quot;Big Data Developers&quot;, &quot;Streaming Big Data&quot;];      
+      display(meetupGroups);  
+      
+      function display(mydata){
+        var anchor = d3.select(&quot;svg&quot;);
+        
+        var selection = anchor.selectAll(&quot;circle&quot;)
+          .data(mydata);
+          
+        selection.style(&quot;fill&quot;, &quot;orange&quot;); // update selection
+        
+        selection.enter() // enter selection
+          .append(&quot;circle&quot;)
+          .attr(&quot;cx&quot;, function (d, i) { return (i + 1) * 150;})
+          .attr(&quot;cy&quot;, 300)
+          .attr(&quot;r&quot;, 0)
+          .style(&quot;fill&quot;, &quot;white&quot;)
+          .transition()
+          .delay( function(d, i) { return i * 1000;} )
+          .duration(3000)
+          .attr(&quot;r&quot;, 50)
+          .style(&quot;fill&quot;, &quot;steelblue&quot;);
+          
+        selection.exit() // exit selection
+          .remove();
+      }    
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</section>
