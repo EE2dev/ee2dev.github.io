@@ -28,25 +28,24 @@
 3. olavi
 
 ###no shows
-1	.	Ahmed O.
-2	.	Aimer
-3	.	Alan Salihi
-4	.	Anton Kotenko
-5	.	Arbora Dalaci
-6	.	Babis Grouzakis (3)
-7	.	Chaitanya Kumar Dondapati
-8	.	Evi S.
-9	.	John Munoz
-10	.	JosÃ© Villaveces
-11	.	Julian von Wirth
-12	.	Kun
-13	.	Laura Lu
-14	.	Michael
-15	.	Nikos Sakiotis (3)
-16	.	Olavi
-17	.	Oliver Schnuck
-18	.	Stefan
-19	.	Vasily Korf
+1.	Ahmed O.
+2.	Aimer
+3.	Alan Salihi
+4.	Anton Kotenko
+5.	Arbora Dalaci
+6.	Babis Grouzakis (3)
+7.	Chaitanya Kumar Dondapati
+8.	Evi S.
+9.	John Munoz
+10.	JosÃ© Villaveces
+11.	Julian von Wirth
+12.	Kun
+13.	Laura Lu
+14.	Michael
+15.	Nikos Sakiotis (3)
+16.	Olavi
+17.	Oliver Schnuck
+18.	Vasily Korf
 
 ### email remove form group
 Dear folks,
