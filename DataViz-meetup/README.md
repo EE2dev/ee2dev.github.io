@@ -28,6 +28,7 @@
 3. olavi
 
 ###no shows
+(2/2) or (2/3) or (3/3)
 1.	Ahmed O.
 2.	Aimer
 3.	Alan Salihi
