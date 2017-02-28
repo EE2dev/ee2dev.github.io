@@ -63,5 +63,9 @@ Regards,
 ###potential future presenters
 
 may 3rd
-- Timo Philip Burmeister (email): visualizing web structure with graph viz
+(- Timo Philip Burmeister (email): visualizing web structure with graph viz)
+- Gianluca (email), Jaspersoft
 - Frode Voll Aasen	(email): datavault builder
+
+Oct
+- Klaus Blass
