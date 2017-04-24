@@ -70,3 +70,6 @@ may 3rd
 Oct
 - Klaus Blass
 - Massimo Paolucci ?
+
+Jan
+- Dominikus Baur
