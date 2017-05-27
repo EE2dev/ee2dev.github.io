@@ -49,7 +49,7 @@
 17.	Oliver Schnuck
 18.	Vasily Korf
 
-### email remove form group
+### email remove from group
 Dear folks,
 
 As announced and repeatedly posted, I asked all members to follow up on the RSVP's to ensure proper planning of food, drinks, etc.
