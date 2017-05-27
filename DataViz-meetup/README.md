@@ -1,4 +1,4 @@
-###attendence
+### attendence
 - 66 (140 RSVP'ed)
 - 81 (152 RSVP'ed)
 - 95 (159 RSVP'ed)
@@ -27,7 +27,7 @@
 2. Nikos Sakiotis
 3. olavi
 
-###no shows
+### no shows
 (2/2) or (2/3) or (3/3)
 
 1.	Ahmed O.
@@ -60,7 +60,7 @@ Regards,
 
  Michael. 
 
-###potential future presenters
+### potential future presenters
 
 may 3rd
 (- Timo Philip Burmeister (email): visualizing web structure with graph viz)
