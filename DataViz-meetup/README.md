@@ -5,7 +5,7 @@
 - 86 (128 RSVP'ed)
 
 ## 2nd meetup:
-###no shows
+### no shows
 (2/2)
 
 1. Babis Grouzakis
