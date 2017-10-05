@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+
+<!-----------------------------------------------------------
+approach from ptamarit
+https://github.com/hakimel/reveal.js/issues/456
+https://github.com/ptamarit/slides-data-viz-web-d3
+
+using d3.js in reveal:
+1) include the correct d3.js lib (see <-- D3 --)
+2) include your .js in (see <-- MIHAEL'S D3 SCRIPTS --
+3) optional: if slides are in separate file, then refer to them with
+	<section data-external="mySlides/slide_01/title.html"></section>
+4) In separate x.html file, set a unique section ID (<section id="intro">)
+5) in reveal-to-d3-config, set map 'init' to <section ID> and also the right init function
+6) in external .js file, wrap d3 code into: 
+	pt.title = pt.title || {};
+	pt.title.init = function() { // d3 code }
+7) for transitions do
+a) add <span class="fragment"></span> in section html
+b) in reveal-to-d3-config, set map '0' (or '1',..) to index of fragment
+   'rsvp': {
+    'init': function() {
+      pt.rsvp.init();
+    },
+	'0': function() {
+      pt.rsvp.update();
+    }
+  }
+
+Note:	
+	- d3.js in first slide does not work
+	- reveal with d3 to pdf: http://jack-kelly.com/convert_revealjs_d3_to_pdf
+------------------------------------------------------------>
+	<head>
+		<meta charset="utf-8">
+
+		<title>Data Visualization in Munich - Meetup</title>
+
+		<meta name="description" content="Data Visualization in Munich - Meetup">
+		<meta name="author" content="Mihael Ankerst">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<!--
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/style.css" id="theme">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">		
+
+		<!-- Code syntax highlighting 
+		<!-- link rel="stylesheet" href="lib/css/monokai-sublime.css"
+		 <link rel="stylesheet" href="lib/css/foundation.css"> 
+		
+
+		-->
+		
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		
+		<!-- Mihael Ankerst's style --
+		<link rel="stylesheet" href="css/myStyle.css"-->	
+
+
+		<!-- Code syntax highlighting -->
+		<!-- link rel="stylesheet" href="lib/css/zenburn.css"-->		
+
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				
+				<section>
+					click right-arrow to start!
+				</section>	
+				
+				<!--
+				<section data-background-color="black" data-external="mySlides/slide_01/title.html"></section>
+				-->
+				<!--section data-background-color="black" id="title">
+					<h3>Welcome to the third <br>Data visualization in Munich Meetup!</h3>
+				</section-->
+				
+        <section data-background-color="black" data-external="mySlides/slide_07/squid.html"></section>
+        
+				<section>
+						<h3>Thank you for sponsoring...</h3>
+						<ul>
+							<li>... the great location</li>
+						<h3 style="text-transform: none">&#x261E Google</h3>
+
+							<li>... the cool visualization challenge award</li>
+							<li>... the delicious food</li>
+							<li>... the tasty drinks!</li>
+             <h3 style="text-transform: none">&#x261E Allianz and Google</h3>						
+						</ul>            
+				</section>
+        
+				<section>
+					<table>
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th>Topic</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>7.30-7.35</td>
+								<td>Short Intro (Mihael Ankerst)</td>
+							</tr>
+							<tr>
+								<td>7.35-8.00</td>
+								<td>Data Exploration with Glue (Philipp Plewa)</td>
+							</tr>
+							<tr>
+								<td>8.00-8.10</td>
+								<td>The latest and greatest visualizations from around the world (Mihael Ankerst)</td>
+							</tr>
+              <tr>
+								<td>8.10-8.45</td>
+								<td>The best entries of the Allianz visualization challenge + award ceremony </td>
+							</tr>
+							<tr>
+								<td>8:45-</td>
+								<td>Get together + networking (All)</td>
+							</tr>								
+						</tbody>
+					</table>
+				</section>	
+				
+				<section data-background-color="white" data-background-transition="zoom">
+					Data Exploration with Glue <br><br> Philipp Plewa
+				</section>
+				
+				<!-- section data-background-color="white" data-background-transition="zoom">
+					Job market - the hottest data viz job openings in town
+				</section-->
+
+				<!--section   data-background-color="white" id="next">
+					<h3>The latest and greatest visualizations</h3>
+					<p><a href="https://distill.pub/">https://distill.pub/</a></p>              
+          <br>
+            <img width="500px" src="img/datasketches.png">         				
+				</section-->
+        
+				<section   data-background-color="white" id="next">
+					<h3>The latest and greatest visualizations</h3>
+          <p><a href="https://pudding.cool/">https://pudding.cool/</a></p>  
+          <p><a href="http://flowingdata.com/2016/01/19/how-you-will-die">http://flowingdata.com/2016/01/19/how-you-will-die</a></p>                     
+					<p><a href="https://distill.pub/">https://distill.pub/</a></p>
+          <p><a href="http://regl.party/examples">http://regl.party/examples</a></p> 
+          <p><a href="https://www.designernews.co/stories/84443-redditors-design-worst-volume-sliders-possible">https://www.designernews.co/stories/84443-redditors-design-worst-volume-sliders-possible</a></p> 
+          <p><a href="https://docs.google.com/spreadsheets">https://docs.google.com/spreadsheets</a></p> 
+          <br>        				
+				</section>
+        
+        <section   data-background-color="white" id="next">
+					<h3>The Allianz visualization challenge</h3>
+					<p><a href="https://www.meetup.com/Data-Visualization-Meetup-Munich/messages/boards/thread/50854350">Visualize the kind of books the customers have bought</a></p>            
+          <br>
+           <img width="500px" src="img/owl.gif">         				
+				</section>
+        
+        <section   data-background-color="white" id="next">
+					<h3>The Allianz visualization challenge</h3>
+          <br>
+        	<ul>
+							<li>The fictitious online bookstore BuyMyBooks.com has collected data about the shopping behaviour of its customers.</li>
+							<li>Over the last 3 months, a total of 195.387 customers bought books from the store.</li>
+							<li>The collected data is stored in the data sheet and contains the combinations of book genres the customer bought.</li>					
+						</ul>          				
+				</section>
+        
+        <section   data-background-color="white" id="next">
+					<h3>The Allianz visualization challenge</h3>
+					<p><a href="https://www.meetup.com/Data-Visualization-Meetup-Munich/messages/boards/thread/50665200">The dataset</a></p>            
+          <br>
+           <img width="500px" src="img/az_data.png">         				
+				</section>        
+
+        <section   data-background-color="white" id="next">
+					<h3>The Award</h3><h3>...and the winner is...</h3>
+					<!--p>2 tickets for a Bayern Munich football game<br> at the Allianz Arena</p-->            
+            <img src="img/spider.gif">         				
+				</section>
+				
+        <section   data-background-color="white" id="next">
+					<h3>The Allianz visualization challenge</h3><h3>prize</h3>
+					<p>2 tickets for a Bayern Munich football game<br> at the Allianz Arena</p>            
+            <img width="500px" src="img/Allianz_prize.png">         				
+				</section>
+        
+        <!--section data-background-color="white" id="next">
+					Job market<br>Introducing the hottest data viz job openings in town
+				</section-->
+        
+				<section   data-background-color="white" id="next">
+					<h3>What happens next? </h3>
+					<p>Next meetup takes place <br>on Thursday, Jan 25th 2018 at Stylight</p>
+					<br>
+					<p><b>Please get in touch with me</b></p>
+					<ul>
+						<li>to present your own visualization</li>
+	
+						<li>to show someone's visualization</li>
+
+						<li>to tell me any suggestions</li>
+					</ul>					
+				</section>
+				        
+				<section  data-background-color="steelblue" data-background-transition="zoom" id="thankyou">
+				Thank you!!
+				<br><br>
+				<img src="img/squid.png">
+				<br><br>and now let's have a drink together!
+				</section>						
+	
+			</div>
+
+		</div>
+
+		<!-- REVEAL -->
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<!-- JQUERY -->
+		<script src="js/jquery-1.12.0.min.js"></script>
+		<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
+
+		<!-- UNDERSCORE -->
+		<script src="js/underscore.js"></script>
+
+		<!-- D3 -->
+		<script src="js/d3.min.js"></script>
+		<!-- <script src="js/d3.hexbin.v0.min.js"></script> -->
+		<!-- <script src="http://d3js.org/topojson.v0.min.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script> -->
+		<!-- <script type="text/javascript" src="http://d3js.org/d3.hexbin.v0.min.js"></script> -->
+
+		<!-- REVEAL TO D3 -->
+		 <script src="js/reveal-to-d3-config.js"></script>
+		 <script src="js/reveal-to-d3.js"></script>
+
+		<!-- MIHAEL'S D3 SCRIPTS -->
+
+		<!-- Some helper functions that are used by several D3 scripts -->
+		
+		<script src="mySlides/slide_01/title.js"></script>
+		<script src="mySlides/slide_03/members.js"></script>
+		<script src="mySlides/slide_04/rsvp.js"></script>
+    <script src="mySlides/slide_05/rsvpb.js"></script>
+		<script src="mySlides/slide_06/bug.js"></script>
+		<script src="mySlides/slide_07/kraken.js"></script>
+		<script src="mySlides/slide_10/calSolution.js"></script>
+		<script src="mySlides/slide_12/cardSolution.js"></script>
+		
+		<!-- REVEAL INIT -->
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: false,
+				history: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will be preserved
+			    // when the presentation is scaled to fit different resolutions. Can be
+			    // specified using percentage units.
+			    width:  960, //'100%', // 1024, //1920, //'100%',
+			    height:  700, //'100%', // 768, //1080, //'100%',
+			    // Factor of the display size that should remain empty around the content
+    			margin: 0,
+				// Bounds for smallest/largest possible scale to apply to content
+    			minScale: 0.2,
+    			maxScale: 4,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/highlight/highlight.js', async: false, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			//Remove the very heavy title slide (& slightly heavy end slide)
+			//by slides before and after that have no JS scripts running by themselves
+			Reveal.addEventListener( 'removeSVGs', function() {
+		    	d3.select('#title-slide #titleSlide svg').remove();
+		    	d3.select('#end-slide #endSlide svg').remove();
+			} );
+
+		</script>
+
+	</body>
+</html>
