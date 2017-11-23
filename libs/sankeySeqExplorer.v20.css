@@ -7,7 +7,7 @@
     user-select: none;
   }
 
-  pre#data, pre#dataNodes {
+  pre#data, pre#dataNodes, pre#paths {
     display:none;
   }
 
@@ -15,7 +15,11 @@
     margin: 0 auto;   
     display: table;
   }
-        
+  
+  canvas {
+    position: absolute;
+  }
+
   div.sankeyMenu {
     font-family: sans-serif; 
     font-size: 75%;
@@ -25,7 +29,7 @@
     vertical-align: top;
   }
   
-  div.NodeInfoMenu, div.OptionsMenu {
+  div.NodeInfoMenu, div.PathsMenu, div.OptionsMenu {
     border-style: solid;
     border-width: 2px;
     background-color: rgba(0,0,0,0.1);
@@ -35,7 +39,7 @@
     padding-top: 2px;
   }
   
-  div.NodeInfoMenu {
+  div.NodeInfoMenu, div.PathsMenu {
     margin-top: 5px;
   }
   
@@ -48,6 +52,11 @@
    
   div.sankeyChart {
     display: table-cell;
+  }
+
+  g.tick path {
+    stroke: grey;
+    stroke-width: 3px;
   }
   
   .sankeyNode {
@@ -122,7 +131,6 @@
   /* text labels for transitionY */
   text.percentageLabel {
     opacity: 0;
-    text-anchor: middle;
   }
   
   /* colors for the nodes */
