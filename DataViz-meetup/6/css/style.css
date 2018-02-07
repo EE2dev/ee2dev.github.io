@@ -1,0 +1,42 @@
+
+
+.node rect {
+    fill-opacity: 0;
+    shape-rendering: crispEdges;
+  } 
+
+.link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .1;
+}
+
+.text1 {
+  font-size: 40;
+}
+
+.chart {
+  position: absolute;
+}
+
+body{
+  overflow: hidden;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+path.display {
+  stroke: yellow;
+  stroke-width: 10;
+}
+
+g.header text{
+  fill: #111111;
+}
+
+path, node rect {
+  display: none;
+}
