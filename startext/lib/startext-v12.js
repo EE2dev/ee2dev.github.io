@@ -491,9 +491,18 @@
           var letters = _selection.filter(function (d, i) {
             return i === 0;
           }).selectAll("span");
-          letters.style("-webkit-transform", "rotate(-0deg) scale(.001)").transition().duration(2000).delay(function (d, i) {
+          letters.style("transform", "rotate(-0deg) scale(.001)").transition().duration(2000).delay(function (d, i) {
             return i * 200;
-          }).style("opacity", 1).style("-webkit-transform", "rotate(-720deg) scale(1)").on("end", function (d, i) {
+          }).style("opacity", 1)
+          //.style("transform", "rotate(-720deg) scale(1)")
+          .tween("transform", function () {
+            var node = d3.select(this),
+                s = d3.interpolateNumber(0.001, 1),
+                r = d3.interpolateNumber(-0, -720);
+            return function (t) {
+              node.style("transform", "rotate(" + r(t) + "deg)scale(" + s(t) + ")");
+            };
+          }).on("end", function (d, i) {
             if (i === letters.size() - 1) {
               _index = _index + 1;
               if (num_headers > _index) {
@@ -578,7 +587,7 @@
     }
   }
 
-  function _interface (_myIntro) {
+  function _interface (_myIntro, bulkLoad) {
     "use strict";
 
     var options = {};
@@ -591,6 +600,11 @@
     options.backgroundColor = "#111111";
     options.backgroundImage = "https://ee2dev.github.io/startext/lib/nightSky.jpg";
     options.myIntro = _myIntro;
+
+    function bulkSetOptions() {
+      // no validation with if (_myIntro.hasOwnProperties(..))
+      chartAPI.background(_myIntro.background === "COLOR" ? COLOR : IMAGE).backgroundColor(_myIntro.backgroundColor).backgroundImage(_myIntro.backgroundImage).fontFamily(_myIntro.fontFamily).explosionStrength(_myIntro.explosionStrength).transitionSpeed(_myIntro.transitionSpeed).pause(_myIntro.pause).replay(_myIntro.replay);
+    }
 
     function checkForIE() {
       var msie = window.navigator.userAgent.indexOf("MSIE ");
@@ -665,6 +679,10 @@
       options.transitionSpeed = s(_);
       return chartAPI;
     };
+
+    if (bulkLoad) {
+      bulkSetOptions();
+    }
 
     return chartAPI;
   }
