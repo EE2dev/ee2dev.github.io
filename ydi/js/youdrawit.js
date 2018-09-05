@@ -46,7 +46,7 @@
 
   var formatValue = function formatValue(val, unit, precision, defaultPrecision) {
     var data = precision ? Number(val).toFixed(precision) : defaultPrecision !== 0 ? Number(val).toFixed(defaultPrecision) : defaultPrecision === 0 ? Number(val).toFixed() : val;
-    // const dataDelimited = (getLanguage() === "de") ? String(data).replace(".", ",") : String(data);
+    // revert decimal and thousands separator based on country
     var dataDelimited = numberWithCommas(data);
     if (getLanguage() === "de") {
       var temp1 = dataDelimited.replace(/\./g, "whatever");
@@ -88,7 +88,7 @@
     return { maxDiff: maxDiff, predDiff: predDiff };
   }
 
-  function getScore(key, truth$$1, state, graphMaxY, graphMinY, resultSection, yourResult) {
+  function getScore(key, truth$$1, state, graphMaxY, graphMinY, resultSection, scoreTitle, scoreButtonText, scoreButtonTooltip, scoreHtml) {
     var myScore = 0;
     var guess = state.getResult(key, yourData);
     var r = compareGuess(truth$$1, guess, graphMaxY, graphMinY);
@@ -112,7 +112,8 @@
       var finalScoreFunction = d3.scaleLinear().domain([0, 100 * state.getAllQuestions().length]).range([0, 100]);
       var finalScore = finalScoreFunction(scores).toFixed();
       console.log("The final score is: " + finalScore);
-      showFinalScore(+finalScore, resultSection, key, yourResult);
+
+      drawScore(+finalScore, resultSection, key, scoreTitle, scoreButtonText, scoreButtonTooltip, scoreHtml);
     }
 
     console.log(state.get(key, yourData));
@@ -123,28 +124,76 @@
     console.log(state.getState());
   }
 
-  function showFinalScore(finalScore, resultSection, key, yourResult) {
+  function drawScore(finalScore, resultSection, key, scoreTitle, scoreButtonText, scoreButtonTooltip, scoreHtml) {
+    // add final result button
+    var ac = resultSection.append("div").attr("class", "actionContainer finalScore");
+    var button = ac.append("button").attr("class", "showAction");
+    button.append("div").attr("class", "globals-scoreButtonText update-font").text(scoreButtonText);
 
-    function showText() {
-      d3.select(".result." + key).select("text.scoreText").style("opacity", 1);
-    }
+    var tt = ac.append("div").attr("class", "tooltipcontainer").append("span").attr("class", "tooltiptext globals-scoreButtonTooltip update-font")
+    //.attr("class", "tooltiptext")
+    .text(scoreButtonTooltip);
 
+    // add final result graph
     var fs = {};
-    fs.div = resultSection.select("div.text").append("div").attr("class", "finalScore");
+    fs.div = resultSection.select("div.text").append("div").attr("class", "finalScore text").style("visibility", "hidden");
 
-    fs.div.append("div").attr("class", "before-finalScore").append("strong").text(yourResult);
+    fs.div.append("div")
+    //.attr("class", "before-finalScore globals-scoreTitle update-font")
+    .attr("class", "before-finalScore").append("strong").append("div").attr("class", "globals-scoreTitle update-font").text(scoreTitle);
 
     fs.svg = fs.div.append("svg").attr("width", 500).attr("height", 75);
 
-    fs.g = fs.svg.append("g").attr("transform", "translate(5, 10)");
+    var ch = resultSection.select("div.text").append("div").attr("class", "customHtml").style("visibility", "hidden").style("text-align", "center");
+
+    if (typeof scoreHtml !== "undefined") {
+      var sHtml = scoreHtml.filter(function (d) {
+        return d.lower <= finalScore && d.upper > finalScore;
+      });
+      ch.selectAll("p").data(sHtml).enter().append("p").append("div").attr("class", "globals-scoreHtml update-font").html(function (d) {
+        return d.html;
+      });
+    }
+
+    // adding some space at the bottom to reserved the final display space and 
+    // to have space below the botton (for the tooltip) 
+    // (30 = margin-top from fs.div) , 70 = margin-bottom from div.result.finished.shown)
+    var h = fs.div.node().offsetHeight + ch.node().offsetHeight + 30 + 70 - ac.node().clientHeight;
+    fs.div.style("display", "none").style("visibility", "visible"); // reset to avoid taking up space 
+    ch.style("display", "none").style("visibility", "visible");
+
+    var dummy = resultSection.append("div").attr("class", "dummy").style("height", h + "px");
+
+    button.on("click", function () {
+      d3.select("div.actionContainer.finalScore").style("display", "none");
+      //d3.select(this).style("display", "none");
+      tt.style("display", "none");
+      dummy.remove();
+      showFinalScore(finalScore, resultSection, key);
+    });
+  }
+
+  function showFinalScore(finalScore, resultSection, key) {
+
+    function showText() {
+      d3.select(".result." + key).select("text.scoreText").style("opacity", 1);
+      resultSection.select("div.customHtml").style("visibility", "visible");
+    }
+
+    resultSection.select("div.finalScore.text").style("display", "block");
+    resultSection.select("div.customHtml").style("display", "block").style("visibility", "hidden");
+
+    var fs = {};
+
+    fs.g = resultSection.select(".finalScore.text > svg").append("g").attr("transform", "translate(5, 10)");
 
     var xScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
     var xAxis = d3.axisBottom(xScale).ticks(4);
-    fs.g.append("g").attr("transform", "translate(0, 45)").call(xAxis);
+    fs.g.append("g").attr("transform", "translate(0, 45)").attr("class", "x axis").call(xAxis);
 
     fs.rect = fs.g.append("rect").attr("class", "final-score-result").attr("x", 0).attr("y", 0).attr("height", 40).attr("width", 0);
 
-    fs.txt = fs.g.append("text").attr("class", "scoreText").attr("x", xScale(finalScore) + 5).attr("dy", 27).text("(" + finalScore + "/100)");
+    fs.txt = fs.g.append("text").attr("class", "scoreText globals-scoreText update-font").attr("x", xScale(finalScore) + 5).attr("dy", 27).text("(" + finalScore + "/100)");
 
     fs.rect.transition().duration(3000).attr("width", xScale(finalScore)).on("end", showText);
   }
@@ -171,13 +220,13 @@
       c.axis.append("g").attr("class", "y axis").call(c.yAxis);
     };
 
-    var makeLabel = function makeLabel(pos, addClass) {
+    var makeLabel = function makeLabel(lowerPos, pos, addClass) {
       var x = c.x(pos);
       var y = c.y(indexedData[pos]);
       var text = formatValue(indexedData[pos], question.unit, question.precision);
 
       var label = c.labels.append("div").classed("data-label", true).classed(addClass, true).style("left", x + "px").style("top", y + "px");
-      label.append("span").text(text);
+      label.append("span").append("div").attr("class", "question-label update-font").text(text);
 
       if (pos == minX && isMobile) {
         label.classed("edge-left", true);
@@ -186,7 +235,25 @@
         label.classed("edge-right", true);
       }
 
-      return [c.dots.append("circle").attr("r", 4.5).attr("cx", x).attr("cy", y).attr("class", addClass), label];
+      var circles = void 0;
+      var counter = 0;
+      for (var between = lowerPos + 1; between <= pos; between++) {
+        c.dots.append("circle").attr("r", 4.5).attr("cx", c.x(between)).attr("cy", c.y(indexedData[between])).attr("class", addClass);
+        counter = counter + 1;
+      }
+
+      circles = c.dots.selectAll("circle:nth-last-child(-n+" + counter + ")");
+      /*
+      return [
+        c.dots.append("circle")
+          .attr("r", 4.5)
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("class", addClass),
+        label
+      ];
+      */
+      return [circles, label];
     };
 
     var drawChart = function drawChart(lower, upper, addClass) {
@@ -197,7 +264,7 @@
       var line = d3.area().curve(d3.curveMonotoneX).x(ƒ("year", c.x)).y(ƒ("value", c.y)).defined(definedFn);
 
       if (lower == minX) {
-        makeLabel(minX, addClass);
+        makeLabel(minX - 1, minX, addClass);
       }
       var svgClass = addClass + (upper == lastPointShownAtIndex ? " median" : "");
 
@@ -205,14 +272,14 @@
       group.append("path").attr("d", area(data)).attr("class", "area " + svgClass).attr("fill", "url(#gradient-" + addClass + ")");
       group.append("path").attr("d", line(data)).attr("class", "line " + svgClass);
 
-      return [group].concat(makeLabel(upper, svgClass));
+      return [group].concat(makeLabel(lower, upper, svgClass));
     };
 
     // make visual area empty
     sel.html("");
 
     var margin = {
-      top: 20,
+      top: 44,
       right: isMobile ? 20 : 50,
       bottom: 30,
       left: isMobile ? 20 : 100
@@ -278,10 +345,10 @@
     c.xAxis.tickFormat(function (d) {
       return indexedTimepoint[d];
     }).ticks(maxX - minX);
-    c.yAxis = d3.axisLeft().scale(c.y).tickValues(c.y.ticks(6));
+    c.yAxis = d3.axisLeft().scale(c.y); //.tickValues(c.y.ticks(6));
     c.yAxis.tickFormat(function (d) {
-      return formatValue(d);
-    }, question.unit, question.precision);
+      return formatValue(d, question.unit, question.precision);
+    });
     drawAxes(c);
 
     c.titles = sel.append("div").attr("class", "titles").call(applyMargin).style("top", "0px");
@@ -351,7 +418,7 @@
     // add preview notice
     c.controls = sel.append("div").attr("class", "controls").call(applyMargin).style("padding-left", c.x(minX) + "px");
 
-    c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").text(globals.drawLine);
+    c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").append("div").attr("class", "globals-drawLine update-font").text(globals.drawLine);
 
     // make chart
     var charts = periods.map(function (entry, key) {
@@ -359,7 +426,8 @@
       var upper = entry.year;
 
       // segment title
-      var t = c.titles.append("span").style("left", Math.ceil(c.x(lower) + 1) + "px").style("width", Math.floor(c.x(upper) - c.x(lower) - 1) + "px").text(entry.title);
+      var t = c.titles.append("span").style("left", Math.ceil(c.x(lower) + 1) + "px").style("width", Math.floor(c.x(upper) - c.x(lower) - 1) + "px");
+      t.append("div").attr("class", "globals-drawAreaTitle update-font").text(entry.title);
 
       // assign prediction period to variable to use it later in interactionHandler
       if (key === 1) {
@@ -368,6 +436,7 @@
 
       return drawChart(lower, upper, entry.class);
     });
+
     var resultChart = charts[charts.length - 1][0];
     var resultClip = c.charts.append("clipPath").attr("id", "result-clip-" + key).append("rect").attr("width", c.x(lastPointShownAtIndex)).attr("height", c.height);
     var resultLabel = charts[charts.length - 1].slice(1, 3);
@@ -416,7 +485,7 @@
         return c.x(year) + "px";
       }).style("top", function (r) {
         return c.y(r.value) + "px";
-      }).html("").append("span").text(function (r) {
+      }).html("").append("span").append("div").attr("class", "question-label update-font").text(function (r) {
         return question.precision ? formatValue(r.value, question.unit, question.precision) : formatValue(r.value, question.unit, question.precision, 0);
       });
     };
@@ -430,7 +499,8 @@
       sel.node().classList.add("drawn");
 
       var pos = d3.mouse(c.svg.node());
-      if (pos[1] < margin.top) {
+      // if (pos[1] < margin.top + 4) { return; }
+      if (pos[1] < 0) {
         return;
       }
       var year = clamp(lastPointShownAtIndex, maxX, c.x.invert(pos[0]));
@@ -473,20 +543,25 @@
         return;
       }
       c.labels.selectAll(".your-result").node().classList.add("hideLabels");
-      if (!state.get(key, score)) {
-        var truth$$1 = data.filter(function (d) {
-          return d.year > lastPointShownAtIndex;
-        });
-        getScore(key, truth$$1, state, graphMaxY, graphMinY, resultSection, globals.scoreTitle);
-      }
-      state.set(key, resultShown, true);
       resultClip.transition().duration(700).attr("width", c.x(maxX));
       dragArea.attr("class", "");
+      resultLabel[0].transition().duration(30).delay(function (d, i) {
+        return (i + 1) / resultLabel[0].size() * 700;
+      }).style("opacity", 1);
+
       setTimeout(function () {
         resultLabel.map(function (e) {
           return e.style("opacity", 1);
         });
         resultSection.node().classList.add("shown");
+
+        if (!state.get(key, score)) {
+          var truth$$1 = data.filter(function (d) {
+            return d.year > lastPointShownAtIndex;
+          });
+          getScore(key, truth$$1, state, graphMaxY, graphMinY, resultSection, globals.scoreTitle, globals.scoreButtonText, globals.scoreButtonTooltip, globals.scoreHtml);
+        }
+        state.set(key, resultShown, true);
       }, 700);
     };
     resultSection.select("button").on("click", showResultChart);
@@ -521,7 +596,9 @@
       var text = formatValue(truthValue, question.unit, question.precision);
 
       var label = c.labels.append("div").classed("data-label", true).classed(addClass, true).style("opacity", 0).style("left", x + "px").style("top", y + "px");
-      label.append("span").classed("no-dot", true).text(text);
+      label.append("span")
+      // .classed("no-dot question-label update-font", true)
+      .classed("no-dot", true).append("div").classed("question-label update-font", true).text(text);
 
       if (pos == minX && isMobile) {
         label.classed("edge-left", true);
@@ -546,7 +623,7 @@
     sel.html("");
 
     var margin = {
-      top: 20,
+      top: 40,
       right: isMobile ? 20 : 50,
       bottom: 30,
       left: isMobile ? 20 : 100
@@ -606,8 +683,8 @@
     c.xAxis = d3.axisBottom().scale(c.x);
     c.yAxis = d3.axisLeft().scale(c.y).tickValues(c.y.ticks(6));
     c.yAxis.tickFormat(function (d) {
-      return formatValue(d);
-    }, question.unit, question.precision);
+      return formatValue(d, question.unit, question.precision);
+    });
     drawAxes(c);
 
     c.titles = sel.append("div").attr("class", "titles").call(applyMargin).style("top", "0px");
@@ -676,18 +753,14 @@
     // add preview notice
     c.controls = sel.append("div").attr("class", "controls").call(applyMargin).style("padding-left", c.xPredictionCenter);
 
-    c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").text(globals.drawBar);
+    c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").append("div").attr("class", "globals-drawBar update-font").text(globals.drawBar);
 
     // make chart
     var truthSelection = drawChart("blue");
 
     // segment title
-    c.predictionTitle = c.titles.append("span")
-    /*
-    .style("left", c.x(prediction) + "px")
-    .style("width", c.x.bandwidth() + "px")
-    */
-    .style("left", "1px").style("width", c.width / 2 - 1 + "px").text(globals.drawAreaTitle);
+    c.predictionTitle = c.titles.append("span").style("left", "1px").style("width", c.width / 2 - 1 + "px");
+    c.predictionTitle.append("div").attr("class", "globals-drawAreaTitle update-font").text(globals.drawAreaTitle);
 
     // Interactive user selection part
     userSel.attr("x", c.x(prediction)).attr("y", c.height - 30).attr("width", c.x.bandwidth()).attr("height", 30);
@@ -718,7 +791,9 @@
       var yourResult = c.labels.selectAll(".your-result").data([d]);
       yourResult.enter().append("div").classed("data-label your-result", true).classed("edge-right", isMobile).merge(yourResult).style("left", c.xPredictionCenter + "px").style("top", function (r) {
         return c.y(r.value) + "px";
-      }).html("").append("span").classed("no-dot", true).text(function (r) {
+      }).html("").append("span")
+      //.classed("no-dot question-label update-font", true)
+      .classed("no-dot", true).append("div").classed("question-label update-font", true).text(function (r) {
         return question.precision ? formatValue(r.value, question.unit, question.precision) : formatValue(r.value, question.unit, question.precision, 0);
       });
     };
@@ -734,7 +809,8 @@
       sel.node().classList.add("drawn");
 
       var pos = d3.mouse(c.svg.node());
-      if (pos[1] < margin.top) {
+      // if (pos[1] < margin.top) { return; }
+      if (pos[1] < 0) {
         return;
       }
       var value = clamp(c.y.domain()[0], c.y.domain()[1], c.y.invert(pos[1]));
@@ -769,13 +845,6 @@
         return;
       }
       c.labels.selectAll(".your-result").node().classList.add("hideLabels");
-      if (!state.get(key, score)) {
-        var _truth = data.filter(function (d) {
-          return d.year === lastPointShownAtIndex;
-        });
-        getScore(key, _truth, state, graphMaxY, graphMinY, resultSection, globals.scoreTitle);
-      }
-      state.set(key, resultShown, true);
 
       var h = c.y(data[0].value);
       truthSelection.transition().duration(1300).attr("y", h).attr("height", c.height - h);
@@ -785,6 +854,14 @@
       setTimeout(function () {
         c.labels.select("div.data-label").style("opacity", 1);
         resultSection.node().classList.add("shown");
+
+        if (!state.get(key, score)) {
+          var _truth = data.filter(function (d) {
+            return d.year === lastPointShownAtIndex;
+          });
+          getScore(key, _truth, state, graphMaxY, graphMinY, resultSection, globals.scoreTitle, globals.scoreButtonText, globals.scoreButtonTooltip, globals.scoreHtml);
+        }
+        state.set(key, resultShown, true);
       }, 1300);
     };
     resultSection.select("button").on("click", showResultChart);
@@ -901,11 +978,26 @@
 
     var options = {};
     options.containerDiv = d3.select("body");
+    options.globals = {};
+    /* option.globals contain:
+      g.default
+      g.header
+      g.subHeader
+      g.drawAreaTitle
+      g.drawLine
+      g.drawBar
+      g.resultButtonText
+      g.resultButtonTooltip
+      g.scoreTitle
+      g.scoreButtonText
+      g.scoreButtonTooltip
+      g.scoreHtml
+    */
     options.questions = [];
     /* options.questions is an array of question objects q with:
       q.data
       q.heading
-      q.subheading
+      q.subHeading
       q.resultHtml
       q.unit
       q.precision
@@ -915,20 +1007,6 @@
         // the following are internal properties
       q.chartType
       q.key
-    */
-
-    options.globals = {};
-    /* option.globals contain:
-      g.default
-      g.title
-      g.header
-      g.subheader
-      g.drawAreaTitle
-      g.drawLine
-      g.drawBar
-      g.resultButtonText
-      g.resultButtonTooltip
-      g.scoreTitle
     */
 
     // API for external access
@@ -970,28 +1048,52 @@
     function setGlobalDefault(lang) {
       var g = options.globals;
       if (lang === "de") {
-        // German
-        g.title = "Quiz";
-        g.resultButtonText = "Zeig mir die Lösung!";
-        g.resultButtonTooltip = "Zeichnen Sie Ihre Einschätzung. Der Klick verrät, ob sie stimmt.";
-        g.scoreTitle = "Ihr Ergebnis:";
-        g.drawAreaTitle = "Ihre\nEinschätzung";
-        g.drawLine = "Zeichnen Sie von hier\ndie Linie zu Ende";
-        g.drawBar = "Ziehen Sie den Balken\nin die entsprechende Höhe";
+        // de (German)
+        g.resultButtonText = typeof g.resultButtonText === "undefined" ? "Zeig mir die Lösung!" : g.resultButtonText;
+        g.resultButtonTooltip = typeof g.resultButtonTooltip === "undefined" ? "Zeichnen Sie Ihre Einschätzung. Der Klick verrät, ob sie stimmt." : g.resultButtonTooltip;
+        g.scoreTitle = typeof g.scoreTitle === "undefined" ? "Ihr Ergebnis:" : g.scoreTitle;
+        g.scoreButtonText = typeof g.scoreButtonText === "undefined" ? "Zeig mir, wie gut ich war!" : g.scoreButtonText;
+        g.scoreButtonTooltip = typeof g.scoreButtonTooltip === "undefined" ? "Klicken Sie hier, um Ihr Gesamtergebnis zu sehen" : g.scoreButtonTooltip;
+        g.drawAreaTitle = typeof g.drawAreaTitle === "undefined" ? "Ihre\nEinschätzung" : g.drawAreaTitle;
+        g.drawLine = typeof g.drawLine === "undefined" ? "Zeichnen Sie von hier\nden Verlauf zu Ende" : g.drawLine;
+        g.drawBar = typeof g.drawBar === "undefined" ? "Ziehen Sie den Balken\nauf die entsprechende Höhe" : g.drawBar;
       } else {
-        // lang === "English"
+        // lang === "en" (English)
         g.default = "en";
-        g.title = "Trivia";
-        g.resultButtonText = "Show me the result!";
-        g.resultButtonTooltip = "Draw your guess. Upon clicking here, you see if you're right.";
-        g.scoreTitle = "Your result:";
-        g.drawAreaTitle = "Your\nguess";
-        g.drawLine = "drag the line\nfrom here to the end";
-        g.drawBar = "drag the bar\nto the estimated height";
+        g.resultButtonText = typeof g.resultButtonText === "undefined" ? "Show me the result!" : g.resultButtonText;
+        g.resultButtonTooltip = typeof g.resultButtonTooltip === "undefined" ? "Draw your guess. Upon clicking here, you see if you're right." : g.resultButtonTooltip;
+        g.scoreTitle = typeof g.scoreTitle === "undefined" ? "Your result:" : g.scoreTitle;
+        g.scoreButtonText = typeof g.scoreButtonText === "undefined" ? "Show me how good I am!" : g.scoreButtonText;
+        g.scoreButtonTooltip = typeof g.scoreButtonTooltip === "undefined" ? "Click here to see your result" : g.scoreButtonTooltip;
+        g.drawAreaTitle = typeof g.drawAreaTitle === "undefined" ? "Your\nguess" : g.drawAreaTitle;
+        g.drawLine = typeof g.drawLine === "undefined" ? "draw the graph\nfrom here to the end" : g.drawLine;
+        g.drawBar = typeof g.drawBar === "undefined" ? "drag the bar\nto the estimated height" : g.drawBar;
       }
     }
 
     function completeQuestions() {
+      if (typeof options.globals.scoreHtml !== "undefined") {
+        if (typeof options.globals.scoreHtml === "string" || options.globals.scoreHtml instanceof String) {
+          if (!checkResult(options.globals.scoreHtml)) {
+            console.log("invalid scoreHtml!");
+            options.globals.scoreHtml = void 0; // set to undefined
+          } else {
+            options.globals.scoreHtml = [{ lower: 0, upper: 101, html: options.globals.scoreHtml }];
+          }
+        } else {
+          // options.globals.scoreHtml is an array
+          if (typeof options.globals.scoreHtml.length !== "undefined") {
+            options.globals.scoreHtml.forEach(function (range) {
+              var exp = range.html;
+              if (!checkResult(exp)) {
+                console.log("invalid scoreHtml! -> set to empty string");
+                range.html = "";
+              }
+            });
+          }
+        }
+      }
+
       options.questions.forEach(function (q, index) {
         if (!q.data) {
           console.log("no data specified!");
@@ -1002,7 +1104,7 @@
 
         q.chartType = !isNumber(q.data) ? "timeSeries" : "barChart";
         q.heading = typeof q.heading === "undefined" ? "" : q.heading;
-        q.subheading = typeof q.subheading === "undefined" ? "" : q.subHeading;
+        q.subHeading = typeof q.subHeading === "undefined" ? "" : q.subHeading;
         q.resultHtml = typeof q.resultHtml === "undefined" ? "<br>" : q.resultHtml;
         q.unit = typeof q.unit === "undefined" ? "" : q.unit;
         q.precision = typeof q.precision === "undefined" ? 1 : q.precision;
@@ -1030,57 +1132,39 @@
     }
 
     function completeDOM() {
-      d3.select("header").append("title").text(options.globals.title);
-
       var art = options.containerDiv.append("article").attr("id", "content").attr("class", "container");
 
       var intro = art.append("div").attr("class", "intro");
-      intro.append("h1").text(options.globals.header);
-      intro.append("p").text(options.globals.subheader);
+      intro.append("h1").append("div").attr("class", "globals-header update-font").html(options.globals.header);
+      intro.append("p").append("div").attr("class", "globals-subHeader update-font").html(options.globals.subHeader);
 
       var questions = art.append("div").attr("class", "questions");
 
       options.questions.forEach(function (q) {
         var question = questions.append("div").attr("class", "question");
-        question.append("h2").text(q.heading);
-        question.append("h3").text(q.subheading);
+        question.append("h2").append("div").attr("class", "question-heading update-font").html(q.heading);
+        question.append("h3").append("div").attr("class", "question-subHeading update-font").html(q.subHeading);
         question.append("div").attr("class", "you-draw-it " + q.key).attr("data-key", q.key);
 
         var res = question.append("div").attr("class", "result " + q.key);
         var ac = res.append("div").attr("class", "actionContainer");
-        ac.append("button").attr("class", "showAction").attr("disabled", "disabled").text(options.globals.resultButtonText);
-        ac.append("div").attr("class", "tooltipcontainer").append("span").attr("class", "tooltiptext").text(options.globals.resultButtonTooltip);
+        ac.append("button").attr("class", "showAction").attr("disabled", "disabled").append("div").attr("class", "globals-resultButtonText update-font").text(options.globals.resultButtonText);
+        ac.append("div").attr("class", "tooltipcontainer").append("span").attr("class", "tooltiptext globals-resultButtonTooltip update-font").text(options.globals.resultButtonTooltip);
 
-        res.append("div").attr("class", "text").append("p").html(q.resultHtml);
+        res.append("div").attr("class", "text").append("p").append("div").attr("class", "question-resultHtml update-font").html(q.resultHtml);
       });
-
-      /*
-      const fs = art.append("hr")
-        .append("div")
-        .attr("class", "actionContainer final-score");
-        fs.append("button")
-        .attr("class", "showAction")
-        .attr("disabled", "disabled")
-        .text(options.globals.resultButtonText);
-      fs.append("div")
-        .attr("class", "tooltipcontainer")
-        .append("span")
-        .attr("class", "tooltiptext")
-        .text(options.globals.resultButtonTooltip);
-      fs.append("div")
-        .attr("class", "text")
-        .append("text").text("hallo erstmal");
-        art.append("hr");
-      art.append("hr");
-      */
     }
 
     function checkResult(exp) {
+      // checks if html might contain javascript
       if (!exp) {
         return true;
       }
       var expUC = exp.toUpperCase();
       if (expUC.indexOf("<") !== -1 && expUC.indexOf("SCRIPT") !== -1 && expUC.indexOf(">") !== -1) {
+        console.log("--- invalid html!");
+        console.log("--- expression was: ");
+        console.log(exp);
         return false;
       } else {
         return true;
