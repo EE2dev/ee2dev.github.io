@@ -603,6 +603,28 @@ ul {
   border-top-color: #ff9900;
 }
 
+.question .result.finished .tooltipcontainer {
+  display: none;
+}
+
+.question-referenceValues {
+  color: grey;
+  stroke: grey;
+}
+
+.question-referenceValues.referenceLine .referencePath{
+  stroke-width: 1;
+  stroke-dasharray: 5, 5;
+}
+.you-draw-it .question-referenceValues.referenceLine {
+  fill: grey;
+  stroke: grey;
+  
+  font-family: Thesis, Helvetica, Arial, sans-serif;
+  stroke-width: 0.01;
+  font-size: 14px;
+}
+
 .you-draw-it .wave {
   fill:  #ff9900;
   fill: grey;
@@ -977,7 +999,5 @@ body {
   .you-draw-it {
   margin: 0 -30px;
 }
-.question .result.finished .tooltipcontainer {
-  display: none;
-}
+
 }

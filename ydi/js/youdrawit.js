@@ -204,6 +204,154 @@
     fs.rect.transition().duration(3000).attr("width", xScale(finalScore)).on("end", showText);
   }
 
+  /* 
+   * params:
+   * sel: DOM selection for the text label of the reference value. A <span> is added with the text
+   * svg: SVG for the lines connecting the graph with the label
+   * referenceValues: question.referenceValues
+   * c: object constant with graphical DOM selections as properties
+   */
+  function addReferenceLines(sel, svg, referenceValues, c) {
+    var gRef = void 0;
+    var data = void 0;
+    var referenceLine = d3.line().x(ƒ("year", c.x)).y(ƒ("value", c.y)).curve(d3.curveMonotoneX);
+
+    referenceValues.forEach(function (ref, i) {
+      data = ref.value.map(function (ele, index) {
+        return {
+          year: index,
+          value: ele[Object.keys(ele)[0]]
+        };
+      });
+      data.text = ref.text;
+      data.anchor = parsePosition(ref.textPosition);
+      data.offset = getOffset(data.anchor);
+
+      gRef = svg.append("g").attr("class", "reference question-referenceValues referenceLine controls line-" + data.text.trim());
+
+      gRef.append("path").attr("d", referenceLine(data)).attr("class", "line referencePath").attr("id", "curvedPath-" + i);
+
+      gRef.append("text").attr("class", "question-referenceText update-font").attr("dy", "-5").append("textPath").attr("class", "referenceTextPath").attr("text-anchor", data.anchor).attr("startOffset", data.offset).attr("xlink:href", "#curvedPath-" + i).text(data.text);
+    });
+  }
+
+  function parsePosition(pos) {
+    if (pos !== "start" && pos !== "end") {
+      pos = "middle";
+    }
+    return pos;
+  }
+
+  function getOffset(pos) {
+    var offset = void 0;
+    if (pos === "start") {
+      offset = "2%";
+    } else if (pos === "end") {
+      offset = "98%";
+    } else {
+      offset = "50%";
+    }
+    return offset;
+  }
+
+  /*
+   * params:
+   * sel: DOM selection for the text label of the reference value. A <span> is added with the text
+   * svg: SVG for the lines connecting the graph with the label
+   * referenceValues: question.referenceValues
+   * c: object constant with graphical DOM selections as properties
+   */
+  function addReferenceValues(sel, svg, referenceValues, c) {
+    var len = 10;
+    var shiftSpan = 8;
+    var rectHeight = 30;
+    var data = referenceValues.map(function (d) {
+      return c.y(d.value) - shiftSpan;
+    });
+    var positions = getPositions(data, rectHeight, c.height);
+    var gRef = void 0;
+
+    referenceValues.forEach(function (ref, i) {
+      gRef = svg.append("g").attr("class", "reference question-referenceValues controls");
+
+      gRef.append("line").attr("x1", 0).attr("y1", c.y(ref.value)).attr("x2", len / 2).attr("y2", c.y(ref.value));
+
+      gRef.append("line").attr("x1", len / 2).attr("y1", c.y(ref.value)).attr("x2", len).attr("y2", positions[i] + shiftSpan);
+
+      sel.append("span").style("left", len + 3 + "px").style("top", positions[i] + "px").append("div").attr("class", "question-referenceValues update-font").text(ref.text);
+    });
+  }
+
+  function getPositions(data, rectHeight) {
+    var newPositions = void 0;
+    var dataObject = createObject(data, rectHeight);
+    dataObject = adjustBottoms(dataObject);
+    newPositions = trimObject(dataObject);
+    // drawRectangles(g, data2, "after");
+
+    if (newPositions[newPositions.length - 1] < 0) {
+      dataObject = adjustTops(dataObject);
+      newPositions = trimObject(dataObject);
+      // drawRectangles(g, data3, "final");
+    }
+    return newPositions;
+  }
+
+  function createObject(data, rectHeight, height) {
+    // setup data structure with rectangles from bottom to the top
+    var dataObject = [];
+    var obj = { top: height, bottom: height + rectHeight }; // add dummy rect for lower bound
+
+    dataObject.push(obj);
+    data.forEach(function (d) {
+      obj = { top: d, bottom: d + rectHeight };
+      dataObject.push(obj);
+    });
+    obj = { top: 0 - rectHeight, bottom: 0 }; // add dummy rect for upper bound
+    dataObject.push(obj);
+
+    return dataObject;
+  }
+
+  function trimObject(dataObject) {
+    // convert back to original array of values, also remove dummies
+    var data3 = [];
+    dataObject.forEach(function (d, i) {
+      if (!(i === 0 || i === dataObject.length - 1)) {
+        data3.push(d.top);
+      }
+    });
+    return data3;
+  }
+
+  function adjustBottoms(dataObject) {
+    dataObject.forEach(function (d, i) {
+      if (!(i === 0 || i === dataObject.length - 1)) {
+        var diff = dataObject[i - 1].top - d.bottom;
+        if (diff < 0) {
+          // move rect up   
+          d.top += diff;
+          d.bottom += diff;
+        }
+      }
+    });
+    return dataObject;
+  }
+
+  function adjustTops(dataObject) {
+    for (var i = dataObject.length; i-- > 0;) {
+      if (!(i === 0 || i === dataObject.length - 1)) {
+        var diff = dataObject[i + 1].bottom - dataObject[i].top;
+        if (diff > 0) {
+          // move rect down
+          dataObject[i].top += diff;
+          dataObject[i].bottom += diff;
+        }
+      }
+    }
+    return dataObject;
+  }
+
   function ydLine(isMobile, state, sel, key, question, globals, data, indexedTimepoint, indexedData) {
     var minX = data[0].timePointIndex;
     var maxX = data[data.length - 1].timePointIndex;
@@ -427,6 +575,10 @@
     c.controls = sel.append("div").attr("class", "controls").call(applyMargin).style("padding-left", c.x(minX) + "px");
 
     c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").append("div").attr("class", "globals-drawLine update-font").text(globals.drawLine);
+
+    if (typeof question.referenceValues !== "undefined") {
+      addReferenceLines(c.controls, c.svg, question.referenceValues, c);
+    }
 
     // make chart
     var charts = periods.map(function (entry, key) {
@@ -768,6 +920,19 @@
 
     c.controls.append("span").style("left", xTextStart + "px").style("top", yTextStart + "px").append("div").attr("class", "globals-drawBar update-font").text(globals.drawBar);
 
+    if (typeof question.referenceValues !== "undefined") {
+      addReferenceValues(c.controls, c.svg, question.referenceValues, c);
+    }
+
+    /*
+    c.controls.append("span")
+      .style("left", xTextStart + "px")
+      .style("top", c.y(15) + "px") 
+      .append("div")
+      .attr("class", "question-referenceValue update-font")
+      .text(globals.drawBar); 
+      */
+
     // make chart
     var truthSelection = drawChart("blue");
 
@@ -804,9 +969,7 @@
       var yourResult = c.labels.selectAll(".your-result").data([d]);
       yourResult.enter().append("div").classed("data-label your-result", true).classed("edge-right", isMobile).merge(yourResult).style("left", c.xPredictionCenter + "px").style("top", function (r) {
         return c.y(r.value) + "px";
-      }).html("").append("span")
-      //.classed("no-dot question-label update-font", true)
-      .classed("no-dot", true).append("div").classed("question-label update-font", true).text(function (r) {
+      }).html("").append("span").classed("no-dot", true).append("div").classed("question-label update-font", true).text(function (r) {
         return question.precision ? formatValue(r.value, question.unit, question.precision) : formatValue(r.value, question.unit, question.precision, 0);
       });
     };
@@ -1018,6 +1181,7 @@
       q.lastPointShownAt
       q.yAxisMin
       q.yAxisMax
+      q.referenceValues
         // the following are internal properties
       q.chartType
       q.key
