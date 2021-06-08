@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <meta charset="utf-8">
+  <head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/EE2dev/d3-indented-tree/dist/latest/d3-indented-tree.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/EE2dev/d3-indented-tree/dist/latest/d3-indented-tree.css">
+  </head>
+  
+  <body>
+    <script>
+      
+      d3.json("https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/plotAPI.json").then(plotAPI => {
+
+        const marks = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "mark constructor")};
+        const dataSpec = {
+          source: marks,
+          key: "name",
+        };
+
+        const myChart = d3.indentedTree(dataSpec)
+          .nodeImageFile(d => d.data.url ? `https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/icons/${d.data.url}` : null, { width: 16, height: 16, setBackground: true})
+          .linkLabel("type")
+          .linkWidth(150)
+          .nodeTitle("info")
+          .nodeCollapse([1], { property: "depth", propagate: true})
+        ;
+        
+        showChart(myChart);
+      });
+      
+      function showChart(_chart) {
+        d3.select("body")
+          .append("div")
+          .attr("class", "chart")
+          .call(_chart);
+      }           
+    </script>
+  </body>
+</html>  
