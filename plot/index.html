@@ -48,7 +48,7 @@
     
     <script>
       
-      d3.json("https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/plotAPI.json").then(plotAPI => {
+      d3.json("https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/plotAPI.json?a=b").then(plotAPI => {
         const marks = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "mark constructor")};
         const dataSpec = {
           source: marks,
