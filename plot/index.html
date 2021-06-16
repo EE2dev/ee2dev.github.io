@@ -1,8 +1,8 @@
 <!DOCTYPE html>
   <meta charset="utf-8">
   <head>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/EE2dev/d3-indented-tree/dist/latest/d3-indented-tree.min.js?a=b"></script>
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/EE2dev/d3-indented-tree/dist/latest/d3-indented-tree.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/EE2dev/d3-indented-tree/dist/latest/d3-indented-tree.css">
     <style>
       div.header:after {
@@ -15,76 +15,113 @@
         width: 100px;
         padding: 10px;
       }
-    </style>
+    </style>   
   </head>
   
   <body>
     <div class="header">
       <h1>The plot API</h1>
         <div class="input">
-          <label for="tree">Select Tree:</label>
+          <label for="tree">Select tree:</label>
           <select name="tree" id="tree">
-            <option value="marks">Marks</option>
-            <option value="transforms">Transforms</option>
-            <option value="format">Formats</option>
-            <option value="options">Options</option>
+            <option value="marks">marks</option>
+            <option value="transforms">transforms</option>
+            <option value="format">formats</option>
+            <option value="options">options</option>
           </select>
         </div>
         <div class="input">
           <label for="sort">Sort by:</label>
           <select name="sort" id="input-sort">
             <option value="ID-asc">default</option>
-            <option value="name-asc">node (asc)</option>
-            <option value="name-desc">node (desc)</option>
-            <option value="type-asc">link (asc) </option>
-            <option value="type-desc">link (desc) </option>
+            <option value="name-asc">name (asc)</option>
+            <option value="name-desc">name (desc)</option>
+            <option value="type-asc">type (asc) </option>
+            <option value="type-desc">type (desc) </option>
           </select>
         </div>
         <div class="input">
-          <label for="collapse">Reduce tree:</label>
-          <button id="input-collapse">Collapse</button>
+          <label for="collapse">Reset tree:</label>
+          <button id="input-collapse">collapse</button>
         </div>
     </div>
-    
+
+    <div class="chart"></div>
+
     <script>
-      
-      d3.json("https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/plotAPI.json?a=b").then(plotAPI => {
-        const marks = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "mark constructor")};
-        const dataSpec = {
-          source: marks,
+      let myChart;
+      let settings = {};
+
+      d3.json("https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/plotAPI.json").then(plotAPI => {      
+        settings.marks = {};
+        settings.marks.data = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "mark constructor")};
+        settings.marks.nodeImageObject = { width: 16, height: 16, setBackground: true};
+        settings.marks.depth = 1;
+        settings.options = {};
+        settings.options.data = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "options")};
+        settings.options.nodeImageObject = {x: -35, width:40, height:16, preserveAspectRatio: "none" ,setBackground: true};
+        settings.options.depth = 3;
+        settings.format = {};
+        settings.format.data = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "format")};
+        settings.format.nodeImageObject = { width: 16, height: 16, setBackground: true};
+        settings.format.depth = 1;
+        settings.transforms = {};
+        settings.transforms.data = { name: "Plot", children: plotAPI.children.filter((d) => d.type === "option transform")};
+        settings.transforms.nodeImageObject = { width: 16, height: 16, setBackground: true};
+        settings.transforms.depth = 1;
+
+        settings.dataSpec = {
+          source: settings.marks.data,
           key: "name",
         };
+        
+        initializeTree(settings.dataSpec, settings.marks.nodeImageObject, settings.marks.depth);
+        d3.select("div.chart").call(myChart);
+        initializeEventListeners(myChart);
+      });
 
-        const myChart = d3.indentedTree(dataSpec)
-          .nodeImageFile(d => d.data.url ? `https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/icons/${d.data.url}` : null, { width: 16, height: 16, setBackground: true})
+      function initializeTree(_dataSpec, _nodeImageObject, _depth) {
+        myChart = d3.indentedTree(settings.dataSpec)
+          .nodeImageFile(d => d.data.url ? `https://cdn.jsdelivr.net/gh/EE2dev/plotAPI/icons/${d.data.url}` : null,  _nodeImageObject)
           .linkLabel("type")
           .linkWidth(150)
           .nodeTitle("info")
-          .nodeCollapse([1], { property: "depth", propagate: true})
-        ;
-        
-        showChart(myChart);
-        initializeEventListeners(myChart);
-      });
-      
-      function showChart(_chart) {
-        d3.select("body")
-          .append("div")
-          .attr("class", "chart")
-          .call(_chart);
+          .nodeCollapse(_depth, { property: "depth", propagate: true});
       }
+
+      function showNewTree(_selection) {
+        myChart.nodeCollapse([0], { property: "depth", propagate: false});
+
+        d3.select("div.chart svg")
+          .transition()
+          .duration(750)
+          .style("opacity", 0)
+          .on("end", function() {
+            d3.select(this).remove();
+            settings.dataSpec.source = settings[_selection].data;
+            initializeTree(settings.dataSpec, settings[_selection].nodeImageObject, settings[_selection].depth);
+            d3.select("div.chart").call(myChart);
+          })
+      }        
       
       function initializeEventListeners(_myChart) {
+        const tree = document.getElementById('tree');
+        tree.onchange = function() {
+          const selection = this.options[this.selectedIndex].value;
+          showNewTree(selection);
+        };
+
         const sort = document.getElementById('input-sort');
         sort.onchange = function() {
           const selection = this.options[this.selectedIndex].value.split("-");
-          _myChart.nodeSort(selection[0], {ascending: (selection[1] === "asc") ? true : false});
+          myChart.nodeSort(selection[0], {ascending: (selection[1] === "asc") ? true : false});
         };
+
         const collapse = document.getElementById('input-collapse');
         collapse.onclick = function() {
-          _myChart.nodeCollapse([1], { property: "depth", propagate: true});
+          myChart.nodeCollapse([0], { property: "depth", propagate: true});
         };
-      }
+      }   
     </script>
   </body>
 </html>  
