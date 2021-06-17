@@ -12,8 +12,25 @@
       }
       div.input {
         float: left;
-        width: 100px;
+        box-sizing: border-box;
         padding: 10px;
+      }
+      div.info {
+        color: grey;
+      }
+      body{
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Opera and Firefox */
+      }
+      @media (max-width: 1010px) {
+        div.info {
+          display: none;
+        }
       }
     </style>   
   </head>
@@ -43,6 +60,9 @@
         <div class="input">
           <label for="collapse">Reset tree:</label>
           <button id="input-collapse">collapse</button>
+        </div>
+        <div class="input info">
+          Click on a node to expand/collapse. Hover over a node to see tooltip.
         </div>
     </div>
 
