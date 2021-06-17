@@ -111,17 +111,16 @@
 
       function showNewTree(_selection) {
         myChart.nodeCollapse([0], { property: "depth", propagate: false});
-
         d3.select("div.chart svg")
-          .transition()
-          .duration(750)
-          .style("opacity", 0)
-          .on("end", function() {
-            d3.select(this).remove();
-            settings.dataSpec.source = settings[_selection].data;
-            initializeTree(settings.dataSpec, settings[_selection].nodeImageObject, settings[_selection].depth);
-            d3.select("div.chart").call(myChart);
-          })
+        .transition()
+        .duration(750)
+        .style("opacity", 0)
+        .on("end", function() {
+          d3.select(this).remove();
+          settings.dataSpec.source = settings[_selection].data;
+          initializeTree(settings.dataSpec, settings[_selection].nodeImageObject, settings[_selection].depth);
+          d3.select("div.chart").call(myChart);
+        })
       }        
       
       function initializeEventListeners(_myChart) {
