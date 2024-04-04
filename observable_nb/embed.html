@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <!-- link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css" -->
+       
+
+    </head>
+    <body>
+      <div id="observablehq-myPlot-b7bb3733"></div>
+      <div id="observablehq-viewof-dimension-b7bb3733"></div>
+      <div id="observablehq-viewof-thresholds-b7bb3733"></div>
+      <div id="observablehq-viewof-rawDataSize-b7bb3733"></div>
+      <div id="observablehq-viewof-rawDataOffset-b7bb3733"></div>
+      <div id="observablehq-viewof-seed-b7bb3733"></div>
+      <div id="observablehq-viewof-showBoxPlot-b7bb3733"></div>
+      <div id="observablehq-viewof-boxPlotSize-b7bb3733"></div>
+      <div id="observablehq-viewof-flipCoords-b7bb3733"></div>
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+      import define from "https://api.observablehq.com/@ee2dev/raincloud-plots-with-observable-plot@810.js?v=4";
+      new Runtime().module(define, name => {
+        if (name === "myPlot") return new Inspector(document.querySelector("#observablehq-myPlot-b7bb3733"));
+        if (name === "viewof dimension") return new Inspector(document.querySelector("#observablehq-viewof-dimension-b7bb3733"));
+        if (name === "viewof thresholds") return new Inspector(document.querySelector("#observablehq-viewof-thresholds-b7bb3733"));
+        if (name === "viewof rawDataSize") return new Inspector(document.querySelector("#observablehq-viewof-rawDataSize-b7bb3733"));
+        if (name === "viewof rawDataOffset") return new Inspector(document.querySelector("#observablehq-viewof-rawDataOffset-b7bb3733"));
+        if (name === "viewof seed") return new Inspector(document.querySelector("#observablehq-viewof-seed-b7bb3733"));
+        if (name === "viewof showBoxPlot") return new Inspector(document.querySelector("#observablehq-viewof-showBoxPlot-b7bb3733"));
+        if (name === "viewof boxPlotSize") return new Inspector(document.querySelector("#observablehq-viewof-boxPlotSize-b7bb3733"));
+        if (name === "viewof flipCoords") return new Inspector(document.querySelector("#observablehq-viewof-flipCoords-b7bb3733"));
+        return ["rainCloudY","halfViolinY","rawDataY","boxPlotY","rainCloudX","halfViolinX","rawDataX","boxPlotX","maxTotal","bins","jitter"].includes(name);
+      });
+      </script>
+    </body>
+</html>
